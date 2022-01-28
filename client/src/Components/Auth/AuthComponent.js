@@ -7,12 +7,12 @@ import { Typography, Box } from '@mui/material';
 // COMPONENT IMPORTS
 import { DrawerHeader } from '../Utils/LayoutUtils';
 
-const GoldComponent = () => {
+const AuthComponent = () => {
   return (
     <>
       <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <Typography>GoldComponent</Typography>
+        <Typography>AUTH</Typography>
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
@@ -33,4 +33,4 @@ const GoldComponent = () => {
   );
 };
 
-export default GoldComponent;
+export default AuthComponent;

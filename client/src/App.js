@@ -15,9 +15,10 @@ import StocksComponent from './Components/Stocks/StocksComponent';
 import MFComponent from './Components/Mutual Funds/MutualFundsComponent';
 import FDComponent from './Components/Fixed Deposits/FixedDepositComponent';
 import GoldComponent from './Components/Gold/GoldComponent';
+import AuthComponent from './Components/Auth/AuthComponent';
 
 // REDUX IMPORTS
-import { changeThemeAction } from './redux/Theme and Layout/ThemeAndLayoutAction';
+import { changeThemeAction } from './Redux/Theme and Layout/ThemeAndLayoutAction';
 
 const App = () => {
   const classes = useStyles();
@@ -46,6 +47,7 @@ const App = () => {
             </Route> */}
             <Route exact path='/' element={<Navigate to='/home' />} />{' '}
             {/* TEMP */}
+            <Route exact path='/auth' element={<AuthComponent />} />
             <Route exact path='/home' element={<HomeComponent />} />
             <Route exact path='/banks' element={<BankComponent />} />
             <Route exact path='/stocks' element={<StocksComponent />} />
