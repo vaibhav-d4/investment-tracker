@@ -24,7 +24,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import LoginIcon from '@mui/icons-material/Login';
-import LogoutIcon from '@mui/icons-material/Logout';
+// import LogoutIcon from '@mui/icons-material/Logout';
 
 // COMPONENTS IMPORTS
 import useStyles from './LayoutStyles';
@@ -32,7 +32,7 @@ import { AppBar, Drawer, DrawerHeader } from '../Utils/LayoutUtils';
 import sideBarItemsList from './SideBarItems';
 
 // REDUX IMPORTS
-import { toggleDrawerAction } from '../../Redux/Theme and Layout/ThemeAndLayoutAction';
+import { toggleDrawerAction } from '../../Redux/Theme and Layout Redux/ThemeAndLayoutAction';
 
 const Layout = (props) => {
   const theme = useTheme();
@@ -85,7 +85,7 @@ const Layout = (props) => {
                 <Brightness4Icon />
               )}
             </IconButton>
-            <IconButton onClick={() => navigate('/auth')} color='inherit'>
+            <IconButton onClick={() => navigate('/login')} color='inherit'>
               <LoginIcon />
             </IconButton>
           </Toolbar>

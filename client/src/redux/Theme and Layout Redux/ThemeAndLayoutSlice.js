@@ -12,7 +12,7 @@ export const ThemeAndLayoutSlice = createSlice({
     changeTheme: (state, action) => {
       state.themeMode = action.payload;
     },
-    toggleDrawer: (state, action) => {
+    toggleDrawer: (state) => {
       state.isDrawerOpen = !state.isDrawerOpen;
     },
   },
