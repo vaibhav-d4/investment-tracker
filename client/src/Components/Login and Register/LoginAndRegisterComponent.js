@@ -21,6 +21,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import useAuthStyles from './AuthStyles';
 import { DrawerHeader } from '../Utils/LayoutUtils';
 import InputFieldComponent from './InputFieldComponent';
+import GoogleLoginComponent from './GoogleLoginComponent';
 
 // COMPONENT REDIX IMPORTS
 import {
@@ -152,6 +153,7 @@ const LoginAndRegisterComponent = () => {
                   {userIsToRegister ? 'Register' : 'Login'}
                 </Button>
               </div>
+              {!userIsToRegister && <GoogleLoginComponent />}
               <Grid container justifyContent='flex-end'>
                 <Grid item>
                   <Button onClick={toggleLoginAndRegister}>

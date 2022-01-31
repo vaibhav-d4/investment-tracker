@@ -1,5 +1,5 @@
 // REACT IMPORTS
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -35,6 +35,10 @@ const App = () => {
   const toggleColorMode = () => {
     dispatch(changeThemeAction(themeMode));
   };
+
+  useEffect(() => {
+    document.title = process.env.REACT_APP_APPLICATION_NAME;
+  }, []);
 
   return (
     <div className={classes.container}>
