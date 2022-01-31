@@ -9,7 +9,8 @@ const initialState = {
     password: '',
     confirmPassword: '',
   },
-  authData: null,
+  userData: null,
+  userLoggedIn: false,
 };
 
 export const LoginAndRegisterSlice = createSlice({
@@ -23,21 +24,18 @@ export const LoginAndRegisterSlice = createSlice({
       state.userInitialData = action.payload;
     },
     setAuthLocalStorageAfterAccess: (state, action) => {
-      state.authData = action.payload;
+      state.userData = action.payload;
       const setLocalStorageData = {
-        id: state.authData.userData._id,
-        name: state.authData.userData.name,
-        email: state.authData.userData.email,
+        id: state.userData.userData._id,
+        name: state.userData.userData.name,
+        email: state.userData.userData.email,
       };
+      state.userLoggedIn = true;
       localStorage.setItem('user', JSON.stringify(setLocalStorageData));
     },
   },
 });
 
-export const {
-  toggleUserIsToRegister,
-  formUserData,
-  setAuthLocalStorageAfterAccess,
-} = LoginAndRegisterSlice.actions;
+export const { toggleUserIsToRegister, formUserData, setAuthLocalStorageAfterAccess } = LoginAndRegisterSlice.actions;
 
 export default LoginAndRegisterSlice.reducer;

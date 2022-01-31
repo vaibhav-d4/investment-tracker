@@ -24,7 +24,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import LoginIcon from '@mui/icons-material/Login';
-// import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 // COMPONENTS IMPORTS
 import useStyles from './LayoutStyles';
@@ -33,7 +33,10 @@ import sideBarItemsList from './SideBarItems';
 
 // REDUX IMPORTS
 import { toggleDrawerAction } from '../../Redux/Theme and Layout Redux/ThemeAndLayoutAction';
-import { toggleUserIsToRegisterAction } from '../../Redux/Login and Register Redux/LoginAndRegisterAction';
+import {
+  toggleUserIsToRegisterAction,
+  logoutAction,
+} from '../../Redux/Login and Register Redux/LoginAndRegisterAction';
 
 const Layout = (props) => {
   const theme = useTheme();
@@ -41,11 +44,9 @@ const Layout = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const user = localStorage.getItem('user');
+  const isDrawerOpen = useSelector((state) => state.themeAndLayout.isDrawerOpen);
 
-  const isDrawerOpen = useSelector(
-    (state) => state.themeAndLayout.isDrawerOpen
-  );
+  const userLoggedIn = useSelector((state) => state.loginAndRegister.userLoggedIn);
 
   const handleToggleDrawer = () => {
     dispatch(toggleDrawerAction());
@@ -54,6 +55,11 @@ const Layout = (props) => {
   const handleLoginClick = () => {
     navigate('/login');
     dispatch(toggleUserIsToRegisterAction(false));
+  };
+
+  const handleLogoutClick = () => {
+    navigate('/login');
+    dispatch(logoutAction());
   };
 
   return (
@@ -86,15 +92,15 @@ const Layout = (props) => {
             </Typography>
             <Box sx={{ flexGrow: '1' }} />
             <IconButton onClick={props.toggleColorMode} color='inherit'>
-              {props.theme.palette.mode === 'dark' ? (
-                <Brightness7Icon />
-              ) : (
-                <Brightness4Icon />
-              )}
+              {props.theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>
-            {!user && (
+            {!userLoggedIn ? (
               <IconButton onClick={handleLoginClick} color='inherit'>
                 <LoginIcon />
+              </IconButton>
+            ) : (
+              <IconButton onClick={handleLogoutClick} color='inherit'>
+                <LogoutIcon />
               </IconButton>
             )}
           </Toolbar>
@@ -102,11 +108,7 @@ const Layout = (props) => {
         <Drawer variant='permanent' open={isDrawerOpen}>
           <DrawerHeader>
             <IconButton onClick={handleToggleDrawer}>
-              {theme.direction === 'rtl' ? (
-                <ChevronRightIcon />
-              ) : (
-                <ChevronLeftIcon />
-              )}
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
             </IconButton>
           </DrawerHeader>
           <Divider />

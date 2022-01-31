@@ -4,15 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 
 // MUI IMPORTS
-import {
-  Avatar,
-  Box,
-  Container,
-  Grid,
-  Paper,
-  Button,
-  Typography,
-} from '@mui/material';
+import { Avatar, Box, Container, Grid, Paper, Button, Typography } from '@mui/material';
 
 // MUI ICONS IMPORTS
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -47,13 +39,9 @@ const LoginAndRegisterComponent = () => {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const userIsToRegister = useSelector(
-    (state) => state.loginAndRegister.userIsToRegister
-  );
+  const userIsToRegister = useSelector((state) => state.loginAndRegister.userIsToRegister);
 
-  const formData = useSelector(
-    (state) => state.loginAndRegister.userInitialData
-  );
+  const formData = useSelector((state) => state.loginAndRegister.userInitialData);
 
   // Set FormData as empty whenever this page loads up and change back to the login screen
   useEffect(() => {
@@ -66,9 +54,7 @@ const LoginAndRegisterComponent = () => {
   };
 
   const handleInputChange = (e) => {
-    dispatch(
-      formUserDataAction({ ...formData, [e.target.name]: e.target.value })
-    );
+    dispatch(formUserDataAction({ ...formData, [e.target.name]: e.target.value }));
   };
 
   // Main login or register form submit
@@ -96,9 +82,7 @@ const LoginAndRegisterComponent = () => {
             <Avatar className={authClasses.avatar}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography variant='h5'>
-              {userIsToRegister ? 'Register' : 'Login'}
-            </Typography>
+            <Typography variant='h5'>{userIsToRegister ? 'Register' : 'Login'}</Typography>
             <form className={authClasses.form} onSubmit={handleFormSubmit}>
               <Grid container spacing={2}>
                 {userIsToRegister && (
@@ -111,12 +95,7 @@ const LoginAndRegisterComponent = () => {
                       required
                       half
                     />
-                    <InputFieldComponent
-                      name='lastName'
-                      label='Last Name'
-                      handleChange={handleInputChange}
-                      half
-                    />
+                    <InputFieldComponent name='lastName' label='Last Name' handleChange={handleInputChange} half />
                   </>
                 )}
                 <InputFieldComponent
@@ -146,12 +125,7 @@ const LoginAndRegisterComponent = () => {
                 )}
               </Grid>
               <div className={authClasses.submit}>
-                <Button
-                  type='submit'
-                  fullWidth
-                  variant='contained'
-                  color='primary'
-                >
+                <Button type='submit' fullWidth variant='contained' color='primary'>
                   {userIsToRegister ? 'Register' : 'Login'}
                 </Button>
               </div>
@@ -159,9 +133,7 @@ const LoginAndRegisterComponent = () => {
               <Grid container justifyContent='flex-end'>
                 <Grid item>
                   <Button onClick={toggleLoginAndRegister}>
-                    {userIsToRegister
-                      ? 'Login to Existing Account'
-                      : 'Create a new Account'}
+                    {userIsToRegister ? 'Login to Existing Account' : 'Create a new Account'}
                   </Button>
                 </Grid>
               </Grid>

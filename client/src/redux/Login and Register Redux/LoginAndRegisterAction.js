@@ -44,3 +44,8 @@ export const googleLoginAction = (userData, navigate) => async (dispatch) => {
     console.log('file: LoginAndRegisterAction.js ~ line 43 ~ googleLoginAction ~ error', error);
   }
 };
+
+// LOGOUT ACTION
+export const logoutAction = () => async (dispatch) => {
+  localStorage.clear();
+};
