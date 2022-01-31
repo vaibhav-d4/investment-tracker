@@ -1,5 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const checkUserisActive = () => {
+  const user = localStorage.getItem('user');
+  if (user) return true;
+  else return false;
+};
+
 const initialState = {
   userIsToRegister: false,
   userInitialData: {
@@ -10,7 +16,7 @@ const initialState = {
     confirmPassword: '',
   },
   userData: null,
-  userLoggedIn: false,
+  userLoggedIn: checkUserisActive(),
 };
 
 export const LoginAndRegisterSlice = createSlice({

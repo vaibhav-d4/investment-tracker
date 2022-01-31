@@ -112,15 +112,22 @@ const Layout = (props) => {
             </IconButton>
           </DrawerHeader>
           <Divider />
-          {sideBarItemsList.map((item) => {
-            const { text, icon, linkText } = item;
-            return (
-              <ListItem button key={text} onClick={() => navigate(linkText)}>
-                {icon && <ListItemIcon>{icon}</ListItemIcon>}
-                <ListItemText primary={text} />
-              </ListItem>
-            );
-          })}
+          {userLoggedIn ? (
+            sideBarItemsList.map((item) => {
+              const { text, icon, linkText } = item;
+              return (
+                <ListItem button key={text} onClick={() => navigate(linkText)}>
+                  {icon && <ListItemIcon>{icon}</ListItemIcon>}
+                  <ListItemText primary={text} />
+                </ListItem>
+              );
+            })
+          ) : (
+            <ListItem button key={sideBarItemsList[0].text} onClick={() => navigate(sideBarItemsList[0].linkText)}>
+              {sideBarItemsList[0].icon && <ListItemIcon>{sideBarItemsList[0].icon}</ListItemIcon>}
+              <ListItemText primary={sideBarItemsList[0].text} />
+            </ListItem>
+          )}
         </Drawer>
       </Box>
     </>

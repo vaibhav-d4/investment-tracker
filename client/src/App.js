@@ -16,6 +16,8 @@ import MFComponent from './Components/Mutual Funds/MutualFundsComponent';
 import FDComponent from './Components/Fixed Deposits/FixedDepositComponent';
 import GoldComponent from './Components/Gold/GoldComponent';
 import LoginAndRegisterComponent from './Common/Login and Register/LoginAndRegisterComponent';
+import UnauthorizedComponent from './Common/Common Pages/UnauthorizedComponent';
+import PageNotFoundComponent from './Common/Common Pages/PageNotFoundComponent';
 
 // REDUX IMPORTS
 import { changeThemeAction } from './Redux/Theme and Layout Redux/ThemeAndLayoutAction';
@@ -25,6 +27,8 @@ const App = () => {
   const dispatch = useDispatch();
 
   const themeMode = useSelector((state) => state.themeAndLayout.themeMode);
+
+  const userLoggedIn = useSelector((state) => state.loginAndRegister.userLoggedIn);
 
   const theme = createTheme({
     palette: {
@@ -54,13 +58,25 @@ const App = () => {
             {/* AUTH ROUTES */}
             <Route exact path='/login' element={<LoginAndRegisterComponent />} />
             <Route exact path='/register' element={<LoginAndRegisterComponent />} />
+            <Route exact path='/unauthorized' element={<UnauthorizedComponent />} />
             {/* COMPONENTS ROUTE */}
-            <Route exact path='/home' element={<HomeComponent />} />
-            <Route exact path='/banks' element={<BankComponent />} />
-            <Route exact path='/stocks' element={<StocksComponent />} />
-            <Route exact path='/mutualfunds' element={<MFComponent />} />
-            <Route exact path='/fd' element={<FDComponent />} />
-            <Route exact path='/gold' element={<GoldComponent />} />
+            {/* <Route exact path='/home' element={<HomeComponent />} /> */}
+            <Route exact path='/home' element={userLoggedIn ? <HomeComponent /> : <Navigate to='/unauthorized' />} />
+            <Route exact path='/banks' element={userLoggedIn ? <BankComponent /> : <Navigate to='/unauthorized' />} />
+            <Route
+              exact
+              path='/stocks'
+              element={userLoggedIn ? <StocksComponent /> : <Navigate to='/unauthorized' />}
+            />
+            <Route
+              exact
+              path='/mutualfunds'
+              element={userLoggedIn ? <MFComponent /> : <Navigate to='/unauthorized' />}
+            />
+            <Route exact path='/fd' element={userLoggedIn ? <FDComponent /> : <Navigate to='/unauthorized' />} />
+            <Route exact path='/gold' element={userLoggedIn ? <GoldComponent /> : <Navigate to='/unauthorized' />} />
+            {/* PAGE NOT FOUND */}
+            <Route path='*' element={<PageNotFoundComponent />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
