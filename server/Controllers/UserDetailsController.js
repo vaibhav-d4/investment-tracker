@@ -25,6 +25,8 @@ export const register = async (req, res) => {
       name: `${firstName} ${lastName}`,
       email,
       password: hashedPassword,
+      timestamp: new Date(),
+      googleUser: 'No',
     });
 
     const jwtToken = jwt.sign(

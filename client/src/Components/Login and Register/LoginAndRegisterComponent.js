@@ -28,6 +28,7 @@ import {
   toggleUserIsToRegisterAction,
   formUserDataAction,
   loginAction,
+  registerAction,
 } from '../../Redux/Login and Register Redux/LoginAndRegisterAction';
 
 // Initial user data when page loads or reopens
@@ -74,6 +75,7 @@ const LoginAndRegisterComponent = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (userIsToRegister) {
+      dispatch(registerAction(formData, navigate));
     } else {
       dispatch(loginAction(formData, navigate));
     }

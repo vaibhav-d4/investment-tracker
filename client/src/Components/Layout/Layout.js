@@ -41,6 +41,8 @@ const Layout = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const user = localStorage.getItem('user');
+
   const isDrawerOpen = useSelector(
     (state) => state.themeAndLayout.isDrawerOpen
   );
@@ -90,9 +92,11 @@ const Layout = (props) => {
                 <Brightness4Icon />
               )}
             </IconButton>
-            <IconButton onClick={handleLoginClick} color='inherit'>
-              <LoginIcon />
-            </IconButton>
+            {!user && (
+              <IconButton onClick={handleLoginClick} color='inherit'>
+                <LoginIcon />
+              </IconButton>
+            )}
           </Toolbar>
         </AppBar>
         <Drawer variant='permanent' open={isDrawerOpen}>

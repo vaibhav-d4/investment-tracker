@@ -22,10 +22,22 @@ export const LoginAndRegisterSlice = createSlice({
     formUserData: (state, action) => {
       state.userInitialData = action.payload;
     },
+    setAuthLocalStorageAfterAccess: (state, action) => {
+      state.authData = action.payload;
+      const setLocalStorageData = {
+        id: state.authData.userData._id,
+        name: state.authData.userData.name,
+        email: state.authData.userData.email,
+      };
+      localStorage.setItem('user', JSON.stringify(setLocalStorageData));
+    },
   },
 });
 
-export const { toggleUserIsToRegister, formUserData } =
-  LoginAndRegisterSlice.actions;
+export const {
+  toggleUserIsToRegister,
+  formUserData,
+  setAuthLocalStorageAfterAccess,
+} = LoginAndRegisterSlice.actions;
 
 export default LoginAndRegisterSlice.reducer;
