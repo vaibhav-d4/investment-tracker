@@ -2,7 +2,7 @@ import { toggleUserIsToRegister, formUserData } from './LoginAndRegisterSlice';
 import * as api from '../../API/apis.js';
 
 // COMMON ACTIONS
-export const toogleUserIsToRegisterAction = (request) => async (dispatch) => {
+export const toggleUserIsToRegisterAction = (request) => async (dispatch) => {
   dispatch(toggleUserIsToRegister(request));
 };
 

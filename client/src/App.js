@@ -45,13 +45,20 @@ const App = () => {
             {/* <Route exact path='/'>
               {loggedIn ? <Redirect to='/dashboard' /> : <PublicHomePage />}
             </Route> */}
-            <Route exact path='/' element={<Navigate to='/home' />} />{' '}
-            {/* TEMP */}
+            {/* DEFAULT HOME PATH ROUTE */}
+            <Route exact path='/' element={<Navigate to='/home' />} />
+            {/* AUTH ROUTES */}
             <Route
               exact
               path='/login'
               element={<LoginAndRegisterComponent />}
             />
+            <Route
+              exact
+              path='/register'
+              element={<LoginAndRegisterComponent />}
+            />
+            {/* COMPONENTS ROUTE */}
             <Route exact path='/home' element={<HomeComponent />} />
             <Route exact path='/banks' element={<BankComponent />} />
             <Route exact path='/stocks' element={<StocksComponent />} />

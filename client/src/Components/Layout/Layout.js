@@ -33,6 +33,7 @@ import sideBarItemsList from './SideBarItems';
 
 // REDUX IMPORTS
 import { toggleDrawerAction } from '../../Redux/Theme and Layout Redux/ThemeAndLayoutAction';
+import { toggleUserIsToRegisterAction } from '../../Redux/Login and Register Redux/LoginAndRegisterAction';
 
 const Layout = (props) => {
   const theme = useTheme();
@@ -40,13 +41,17 @@ const Layout = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const isDrawerOpen = useSelector(
     (state) => state.themeAndLayout.isDrawerOpen
   );
 
   const handleToggleDrawer = () => {
     dispatch(toggleDrawerAction());
+  };
+
+  const handleLoginClick = () => {
+    navigate('/login');
+    dispatch(toggleUserIsToRegisterAction(false));
   };
 
   return (
@@ -85,7 +90,7 @@ const Layout = (props) => {
                 <Brightness4Icon />
               )}
             </IconButton>
-            <IconButton onClick={() => navigate('/login')} color='inherit'>
+            <IconButton onClick={handleLoginClick} color='inherit'>
               <LoginIcon />
             </IconButton>
           </Toolbar>

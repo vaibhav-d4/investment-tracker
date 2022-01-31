@@ -24,7 +24,7 @@ import InputFieldComponent from './InputFieldComponent';
 
 // COMPONENT REDIX IMPORTS
 import {
-  toogleUserIsToRegisterAction,
+  toggleUserIsToRegisterAction,
   formUserDataAction,
   loginAction,
 } from '../../Redux/Login and Register Redux/LoginAndRegisterAction';
@@ -56,7 +56,7 @@ const LoginAndRegisterComponent = () => {
   // Set FormData as empty whenever this page loads up and change back to the login screen
   useEffect(() => {
     dispatch(formUserDataAction(initialFormData));
-    dispatch(toogleUserIsToRegisterAction(false));
+    dispatch(toggleUserIsToRegisterAction(false));
   }, [dispatch]);
 
   const toggleShowPassword = () => {
@@ -79,7 +79,9 @@ const LoginAndRegisterComponent = () => {
   };
 
   const toggleLoginAndRegister = () => {
-    dispatch(toogleUserIsToRegisterAction(!userIsToRegister));
+    dispatch(toggleUserIsToRegisterAction(!userIsToRegister));
+    if (!userIsToRegister) navigate('/register');
+    else navigate('/login');
   };
 
   return (
