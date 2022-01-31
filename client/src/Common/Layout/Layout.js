@@ -32,7 +32,11 @@ import { AppBar, Drawer, DrawerHeader } from '../Utils/LayoutUtils';
 import sideBarItemsList from './SideBarItems';
 
 // REDUX IMPORTS
-import { toggleDrawerAction } from '../../Redux/Theme and Layout/ThemeAndLayoutAction';
+import { toggleDrawerAction } from '../../Redux/Theme and Layout Redux/ThemeAndLayoutAction';
+import {
+  toggleUserIsToRegisterAction,
+  logoutAction,
+} from '../../Redux/Login and Register Redux/LoginAndRegisterAction';
 
 const Layout = (props) => {
   const theme = useTheme();
@@ -40,13 +44,22 @@ const Layout = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const isDrawerOpen = useSelector(
-    (state) => state.themeAndLayout.isDrawerOpen
-  );
+  const isDrawerOpen = useSelector((state) => state.themeAndLayout.isDrawerOpen);
+
+  const userLoggedIn = useSelector((state) => state.loginAndRegister.userLoggedIn);
 
   const handleToggleDrawer = () => {
     dispatch(toggleDrawerAction());
+  };
+
+  const handleLoginClick = () => {
+    navigate('/login');
+    dispatch(toggleUserIsToRegisterAction(false));
+  };
+
+  const handleLogoutClick = () => {
+    navigate('/login');
+    dispatch(logoutAction());
   };
 
   return (
@@ -79,37 +92,42 @@ const Layout = (props) => {
             </Typography>
             <Box sx={{ flexGrow: '1' }} />
             <IconButton onClick={props.toggleColorMode} color='inherit'>
-              {props.theme.palette.mode === 'dark' ? (
-                <Brightness7Icon />
-              ) : (
-                <Brightness4Icon />
-              )}
+              {props.theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>
-            <IconButton onClick={() => navigate('/auth')} color='inherit'>
-              <LoginIcon />
-            </IconButton>
+            {!userLoggedIn ? (
+              <IconButton onClick={handleLoginClick} color='inherit'>
+                <LoginIcon />
+              </IconButton>
+            ) : (
+              <IconButton onClick={handleLogoutClick} color='inherit'>
+                <LogoutIcon />
+              </IconButton>
+            )}
           </Toolbar>
         </AppBar>
         <Drawer variant='permanent' open={isDrawerOpen}>
           <DrawerHeader>
             <IconButton onClick={handleToggleDrawer}>
-              {theme.direction === 'rtl' ? (
-                <ChevronRightIcon />
-              ) : (
-                <ChevronLeftIcon />
-              )}
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
             </IconButton>
           </DrawerHeader>
           <Divider />
-          {sideBarItemsList.map((item) => {
-            const { text, icon, linkText } = item;
-            return (
-              <ListItem button key={text} onClick={() => navigate(linkText)}>
-                {icon && <ListItemIcon>{icon}</ListItemIcon>}
-                <ListItemText primary={text} />
-              </ListItem>
-            );
-          })}
+          {userLoggedIn ? (
+            sideBarItemsList.map((item) => {
+              const { text, icon, linkText } = item;
+              return (
+                <ListItem button key={text} onClick={() => navigate(linkText)}>
+                  {icon && <ListItemIcon>{icon}</ListItemIcon>}
+                  <ListItemText primary={text} />
+                </ListItem>
+              );
+            })
+          ) : (
+            <ListItem button key={sideBarItemsList[0].text} onClick={() => navigate(sideBarItemsList[0].linkText)}>
+              {sideBarItemsList[0].icon && <ListItemIcon>{sideBarItemsList[0].icon}</ListItemIcon>}
+              <ListItemText primary={sideBarItemsList[0].text} />
+            </ListItem>
+          )}
         </Drawer>
       </Box>
     </>

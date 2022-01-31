@@ -15,6 +15,7 @@ const InputFieldComponent = ({
   half,
   autoFocus,
   type,
+  required,
   handleShowPassword,
 }) => {
   return (
@@ -23,7 +24,7 @@ const InputFieldComponent = ({
         name={name}
         onChange={handleChange}
         variant='outlined'
-        required
+        required={required}
         fullWidth
         label={label}
         autoFocus={autoFocus}
