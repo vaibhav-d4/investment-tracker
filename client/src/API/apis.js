@@ -10,9 +10,7 @@ const API = axios.create({
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('profile')) {
-    req.headers.authorization = `Bearer ${
-      JSON.parse(localStorage.getItem('profile')).token
-    }`;
+    req.headers.authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;
   }
   return req;
 });
@@ -20,3 +18,4 @@ API.interceptors.request.use((req) => {
 // LOGIN AND REGISTER API
 export const login = (formData) => API.post('/user/login', formData);
 export const register = (formData) => API.post('/user/register', formData);
+export const googleLogin = (userData) => API.post('/user/googlelogin', userData);

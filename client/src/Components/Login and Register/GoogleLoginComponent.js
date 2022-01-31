@@ -1,6 +1,8 @@
 // REACT IMPORTS
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { GoogleLogin } from 'react-google-login';
+import { useNavigate } from 'react-router';
 
 // MUI IMPORTS
 import { Button } from '@mui/material';
@@ -9,11 +11,16 @@ import { Button } from '@mui/material';
 import useStyles from './AuthStyles';
 import GoogleIcon from './GoogleIcon';
 
+// COMPONENT REDIX IMPORTS
+import { googleLoginAction } from '../../Redux/Login and Register Redux/LoginAndRegisterAction';
+
 const GoogleLoginComponent = () => {
   const googleClasses = useStyles();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const googleSuccess = async (res) => {
-    console.log(res);
+    dispatch(googleLoginAction(res, navigate));
   };
 
   const googleFailure = (error) => {

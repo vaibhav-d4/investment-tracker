@@ -1,8 +1,4 @@
-import {
-  toggleUserIsToRegister,
-  formUserData,
-  setAuthLocalStorageAfterAccess,
-} from './LoginAndRegisterSlice';
+import { toggleUserIsToRegister, formUserData, setAuthLocalStorageAfterAccess } from './LoginAndRegisterSlice';
 import * as api from '../../API/apis.js';
 
 // COMMON ACTIONS
@@ -23,10 +19,7 @@ export const loginAction = (formData, navigate) => async (dispatch) => {
     dispatch(setAuthLocalStorageAfterAccess(data));
     navigate('/');
   } catch (error) {
-    console.log(
-      'file: LoginAndRegisterAction.js ~ line 19 ~ login ~ error',
-      error
-    );
+    console.log('file: LoginAndRegisterAction.js ~ line 19 ~ login ~ error', error);
   }
 };
 
@@ -37,9 +30,17 @@ export const registerAction = (formData, navigate) => async (dispatch) => {
     dispatch(setAuthLocalStorageAfterAccess(data));
     navigate('/');
   } catch (error) {
-    console.log(
-      'file: LoginAndRegisterAction.js ~ line 33 ~ registerAction ~ error',
-      error
-    );
+    console.log('file: LoginAndRegisterAction.js ~ line 33 ~ registerAction ~ error', error);
+  }
+};
+
+// GOOGLE LOGIN ACTION
+export const googleLoginAction = (userData, navigate) => async (dispatch) => {
+  try {
+    const { data } = await api.googleLogin(userData.profileObj);
+    dispatch(setAuthLocalStorageAfterAccess(data));
+    navigate('/');
+  } catch (error) {
+    console.log('file: LoginAndRegisterAction.js ~ line 43 ~ googleLoginAction ~ error', error);
   }
 };
