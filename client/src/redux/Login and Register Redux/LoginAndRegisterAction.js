@@ -1,4 +1,9 @@
-import { toggleUserIsToRegister, formUserData, setAuthLocalStorageAfterAccess } from './LoginAndRegisterSlice';
+import {
+  toggleUserIsToRegister,
+  formUserData,
+  setAuthLocalStorageAfterAccess,
+  userLogout,
+} from './LoginAndRegisterSlice';
 import * as api from '../../API/apis.js';
 
 // COMMON ACTIONS
@@ -47,5 +52,5 @@ export const googleLoginAction = (userData, navigate) => async (dispatch) => {
 
 // LOGOUT ACTION
 export const logoutAction = () => async (dispatch) => {
-  localStorage.clear();
+  dispatch(userLogout());
 };

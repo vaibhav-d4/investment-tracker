@@ -8,14 +8,14 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 // COMPONENTS AND STYLE IMPORTS
 import useStyles from './AppStyles';
-import Layout from './Components/Layout/Layout';
+import Layout from './Common/Layout/Layout';
 import HomeComponent from './Components/Home/HomeComponent';
 import BankComponent from './Components/Banks and Accounts/BanksAndAccountsComponent';
 import StocksComponent from './Components/Stocks/StocksComponent';
 import MFComponent from './Components/Mutual Funds/MutualFundsComponent';
 import FDComponent from './Components/Fixed Deposits/FixedDepositComponent';
 import GoldComponent from './Components/Gold/GoldComponent';
-import LoginAndRegisterComponent from './Components/Login and Register/LoginAndRegisterComponent';
+import LoginAndRegisterComponent from './Common/Login and Register/LoginAndRegisterComponent';
 
 // REDUX IMPORTS
 import { changeThemeAction } from './Redux/Theme and Layout Redux/ThemeAndLayoutAction';
@@ -52,16 +52,8 @@ const App = () => {
             {/* DEFAULT HOME PATH ROUTE */}
             <Route exact path='/' element={<Navigate to='/home' />} />
             {/* AUTH ROUTES */}
-            <Route
-              exact
-              path='/login'
-              element={<LoginAndRegisterComponent />}
-            />
-            <Route
-              exact
-              path='/register'
-              element={<LoginAndRegisterComponent />}
-            />
+            <Route exact path='/login' element={<LoginAndRegisterComponent />} />
+            <Route exact path='/register' element={<LoginAndRegisterComponent />} />
             {/* COMPONENTS ROUTE */}
             <Route exact path='/home' element={<HomeComponent />} />
             <Route exact path='/banks' element={<BankComponent />} />

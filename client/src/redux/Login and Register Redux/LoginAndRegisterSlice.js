@@ -33,9 +33,14 @@ export const LoginAndRegisterSlice = createSlice({
       state.userLoggedIn = true;
       localStorage.setItem('user', JSON.stringify(setLocalStorageData));
     },
+    userLogout: (state, action) => {
+      localStorage.clear();
+      state.userLoggedIn = false;
+    },
   },
 });
 
-export const { toggleUserIsToRegister, formUserData, setAuthLocalStorageAfterAccess } = LoginAndRegisterSlice.actions;
+export const { toggleUserIsToRegister, formUserData, setAuthLocalStorageAfterAccess, userLogout } =
+  LoginAndRegisterSlice.actions;
 
 export default LoginAndRegisterSlice.reducer;
