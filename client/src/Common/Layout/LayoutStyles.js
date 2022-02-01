@@ -10,6 +10,10 @@ const useStyles = makeStyles((theme) => ({
       textDecoration: 'underline',
     },
   },
+  userNameInAppBar: {
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(10),
+  },
 }));
 
 export default useStyles;

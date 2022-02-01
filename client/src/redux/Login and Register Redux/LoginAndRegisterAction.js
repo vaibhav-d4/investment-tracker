@@ -24,7 +24,7 @@ export const loginAction = (formData, navigate) => async (dispatch) => {
     dispatch(setAuthLocalStorageAfterAccess(data));
     navigate('/');
   } catch (error) {
-    console.log('file: LoginAndRegisterAction.js ~ line 19 ~ login ~ error', error);
+    console.log('loginAction ~ error', error);
   }
 };
 
@@ -35,7 +35,7 @@ export const registerAction = (formData, navigate) => async (dispatch) => {
     dispatch(setAuthLocalStorageAfterAccess(data));
     navigate('/');
   } catch (error) {
-    console.log('file: LoginAndRegisterAction.js ~ line 33 ~ registerAction ~ error', error);
+    console.log('registerAction ~ error', error);
   }
 };
 
@@ -46,7 +46,7 @@ export const googleLoginAction = (userData, navigate) => async (dispatch) => {
     dispatch(setAuthLocalStorageAfterAccess(data));
     navigate('/');
   } catch (error) {
-    console.log('file: LoginAndRegisterAction.js ~ line 43 ~ googleLoginAction ~ error', error);
+    console.log('googleLoginAction ~ error', error);
   }
 };
 

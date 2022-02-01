@@ -109,6 +109,7 @@ export const googleLogin = async (req, res) => {
           _id: existingUser._id,
           name: existingUser.name,
           email: existingUser.email,
+          imageUrl: existingUser.imageUrl,
         };
       } else {
         userData = await User.create({
@@ -126,7 +127,6 @@ export const googleLogin = async (req, res) => {
       });
 
       const dataToSend = constructDataObject(userData);
-      console.log('file: UserDetailsController.js ~ line 128 ~ googleLogin ~ dataToSend', dataToSend);
 
       res.status(202).json({ userData: dataToSend, jwtToken });
     }
