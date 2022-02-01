@@ -2,11 +2,21 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import axios from 'axios';
 
 // FUNCTION IMPORTS
 import User from '../Models/UserDetailsModel.js';
 
 dotenv.config({ path: './Env/.env' });
+
+// TIMESTAMP FUNCTION
+const getCurrentTime = async () => {
+  const getTimeURL = 'https://www.timeapi.io/api/Time/current/zone?timeZone=Asia/Kolkata';
+  const response = await axios.get(getTimeURL);
+  let currentTime = response.data.dateTime;
+  const finalTime = `Time: ${currentTime.split('T')[1].split('.')[0]}, Date: ${currentTime.split('T')[0]}`;
+  return finalTime;
+};
 
 // USER REGISTRATION
 export const register = async (req, res) => {
@@ -19,11 +29,12 @@ export const register = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
+    const registerTimestamp = await getCurrentTime();
     const userData = await User.create({
       name: `${firstName} ${lastName}`,
       email,
       password: hashedPassword,
-      timestamp: new Date(),
+      registerTimestamp: registerTimestamp,
       googleUser: 'No',
     });
 
@@ -31,8 +42,16 @@ export const register = async (req, res) => {
       expiresIn: '1h',
     });
 
-    res.status(201).json({ userData, jwtToken });
+    const dataToSend = {
+      _id: userData._id,
+      name: userData.name,
+      email: userData.email,
+    };
+
+    res.status(201).json({ userData: dataToSend, jwtToken });
   } catch (error) {
+    console.log('file: UserDetailsController.js ~ line 52 ~ register ~ error', error);
+
     res.status(400).json({ error: 'Registration failed. Please try again.' });
   }
 };
@@ -57,7 +76,13 @@ export const login = async (req, res) => {
       { expiresIn: '1h' }
     );
 
-    res.status(200).json({ userData: existingUser, jwtToken });
+    const dataToSend = {
+      _id: existingUser._id,
+      name: existingUser.name,
+      email: existingUser.email,
+    };
+
+    res.status(200).json({ userData: dataToSend, jwtToken });
   } catch (error) {
     res.status(400).json({ error: 'Login failed. Please try again.' });
   }
@@ -69,10 +94,11 @@ export const googleLogin = async (req, res) => {
   try {
     const existingUser = await User.findOne({ email });
 
+    let userData = {};
+    const registerTimestamp = await getCurrentTime();
     if (existingUser?.googleUser === 'No') {
       res.status(400).json({ message: 'User already registered. Please Login.' });
     } else {
-      let userData = {};
       if (existingUser) {
         userData = {
           _id: existingUser._id,
@@ -84,7 +110,7 @@ export const googleLogin = async (req, res) => {
           name: `${givenName} ${familyName}`,
           email,
           password: 'NA (Google User)',
-          timestamp: new Date(),
+          registerTimestamp: registerTimestamp,
           googleUser: 'Yes',
         });
       }
@@ -93,7 +119,13 @@ export const googleLogin = async (req, res) => {
         expiresIn: '1h',
       });
 
-      res.status(202).json({ userData, jwtToken });
+      const dataToSend = {
+        _id: userData._id,
+        name: userData.name,
+        email: userData.email,
+      };
+
+      res.status(202).json({ userData: dataToSend, jwtToken });
     }
   } catch (error) {
     res.status(400).json({ error: 'Login failed. Please try again.' });

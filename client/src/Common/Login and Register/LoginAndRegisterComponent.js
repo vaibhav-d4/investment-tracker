@@ -95,7 +95,6 @@ const LoginAndRegisterComponent = () => {
                       name='firstName'
                       label='First Name'
                       handleChange={handleInputChange}
-                      autoFocus
                       required
                       half
                     />
@@ -107,7 +106,6 @@ const LoginAndRegisterComponent = () => {
                   label='Email'
                   type='email'
                   handleChange={handleInputChange}
-                  autoFocus
                   required
                 />
                 <InputFieldComponent
