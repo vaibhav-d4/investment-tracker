@@ -1,11 +1,10 @@
 import axios from 'axios';
 
-const DEV_URL = process.env.REACT_APP_DEV_URL;
-// const PROD_URL = process.env.REACT_APP_PROD_URL;
+// const URL = process.env.REACT_APP_DEV_URL;
+const URL = process.env.REACT_APP_PROD_URL;
 
 const API = axios.create({
-  // baseURL: PROD_URL,
-  baseURL: DEV_URL,
+  baseURL: URL,
 });
 
 API.interceptors.request.use((req) => {
