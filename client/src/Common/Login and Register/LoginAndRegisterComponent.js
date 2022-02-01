@@ -38,15 +38,19 @@ const LoginAndRegisterComponent = () => {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
-
   const userIsToRegister = useSelector((state) => state.loginAndRegister.userIsToRegister);
 
   const formData = useSelector((state) => state.loginAndRegister.userInitialData);
 
   // Set FormData as empty whenever this page loads up and change back to the login screen
+  // Set register page or login page according to the URL
   useEffect(() => {
     dispatch(formUserDataAction(initialFormData));
-    dispatch(toggleUserIsToRegisterAction(false));
+    if (window.location.pathname === '/login') {
+      dispatch(toggleUserIsToRegisterAction(false));
+    } else if (window.location.pathname === '/register') {
+      dispatch(toggleUserIsToRegisterAction(true));
+    }
   }, [dispatch]);
 
   const toggleShowPassword = () => {
