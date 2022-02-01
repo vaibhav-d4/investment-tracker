@@ -18,6 +18,18 @@ const getCurrentTime = async () => {
   return finalTime;
 };
 
+// CONSTRUCT DATA OBJECT WHICH HAS TO BE SENT TO CLIENT
+const constructDataObject = (user) => {
+  const dataObject = {
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    imageUrl: user.imageUrl,
+  };
+  return dataObject;
+};
+
+//////////////////////// APIS ////////////////////////////////
 // USER REGISTRATION
 export const register = async (req, res) => {
   const { firstName, lastName, email, password, confirmPassword } = req.body;
@@ -36,17 +48,14 @@ export const register = async (req, res) => {
       password: hashedPassword,
       registerTimestamp: registerTimestamp,
       googleUser: 'No',
+      imageUrl: '',
     });
 
     const jwtToken = jwt.sign({ id: userData._id, email: userData.email }, process.env.JWT_SECRET_KEY, {
       expiresIn: '1h',
     });
 
-    const dataToSend = {
-      _id: userData._id,
-      name: userData.name,
-      email: userData.email,
-    };
+    const dataToSend = constructDataObject(userData);
 
     res.status(201).json({ userData: dataToSend, jwtToken });
   } catch (error) {
@@ -76,11 +85,7 @@ export const login = async (req, res) => {
       { expiresIn: '1h' }
     );
 
-    const dataToSend = {
-      _id: existingUser._id,
-      name: existingUser.name,
-      email: existingUser.email,
-    };
+    const dataToSend = constructDataObject(existingUser);
 
     res.status(200).json({ userData: dataToSend, jwtToken });
   } catch (error) {
@@ -90,7 +95,7 @@ export const login = async (req, res) => {
 
 // GOOGLE LOGIN
 export const googleLogin = async (req, res) => {
-  const { email, givenName, familyName } = req.body;
+  const { email, givenName, familyName, imageUrl } = req.body;
   try {
     const existingUser = await User.findOne({ email });
 
@@ -112,6 +117,7 @@ export const googleLogin = async (req, res) => {
           password: 'NA (Google User)',
           registerTimestamp: registerTimestamp,
           googleUser: 'Yes',
+          imageUrl: imageUrl,
         });
       }
 
@@ -119,11 +125,8 @@ export const googleLogin = async (req, res) => {
         expiresIn: '1h',
       });
 
-      const dataToSend = {
-        _id: userData._id,
-        name: userData.name,
-        email: userData.email,
-      };
+      const dataToSend = constructDataObject(userData);
+      console.log('file: UserDetailsController.js ~ line 128 ~ googleLogin ~ dataToSend', dataToSend);
 
       res.status(202).json({ userData: dataToSend, jwtToken });
     }
