@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 
 // MUI IMPORTS
-import { Avatar, Box, Container, Grid, Paper, Button, Typography } from '@mui/material';
+import { Avatar, Box, Container, Grid, Paper, Button, Typography, Alert } from '@mui/material';
 
 // MUI ICONS IMPORTS
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -21,16 +21,9 @@ import {
   formUserDataAction,
   loginAction,
   registerAction,
+  formHasErrorAction,
+  initialFormDataAction,
 } from '../../Redux/Login and Register Redux/LoginAndRegisterAction';
-
-// Initial user data when page loads or reopens
-const initialFormData = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-};
 
 const LoginAndRegisterComponent = () => {
   const authClasses = useAuthStyles();
@@ -38,14 +31,17 @@ const LoginAndRegisterComponent = () => {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
-  const userIsToRegister = useSelector((state) => state.loginAndRegister.userIsToRegister);
 
+  const userIsToRegister = useSelector((state) => state.loginAndRegister.userIsToRegister);
   const formData = useSelector((state) => state.loginAndRegister.userInitialData);
+  const formHasError = useSelector((state) => state.loginAndRegister.formHasError);
+  const formErrorData = useSelector((state) => state.loginAndRegister.formErrorData);
 
   // Set FormData as empty whenever this page loads up and change back to the login screen
   // Set register page or login page according to the URL
   useEffect(() => {
-    dispatch(formUserDataAction(initialFormData));
+    dispatch(initialFormDataAction());
+    dispatch(formHasErrorAction(false));
     if (window.location.pathname === '/login') {
       dispatch(toggleUserIsToRegisterAction(false));
     } else if (window.location.pathname === '/register') {
@@ -58,6 +54,7 @@ const LoginAndRegisterComponent = () => {
   };
 
   const handleInputChange = (e) => {
+    dispatch(formHasErrorAction(false));
     dispatch(formUserDataAction({ ...formData, [e.target.name]: e.target.value }));
   };
 
@@ -72,7 +69,9 @@ const LoginAndRegisterComponent = () => {
   };
 
   const toggleLoginAndRegister = () => {
+    dispatch(initialFormDataAction());
     dispatch(toggleUserIsToRegisterAction(!userIsToRegister));
+    dispatch(formHasErrorAction(false));
     if (!userIsToRegister) navigate('/register');
     else navigate('/login');
   };
@@ -95,11 +94,17 @@ const LoginAndRegisterComponent = () => {
                       name='firstName'
                       label='First Name'
                       handleChange={handleInputChange}
-                      autoFocus
                       required
                       half
+                      value={formData.firstName}
                     />
-                    <InputFieldComponent name='lastName' label='Last Name' handleChange={handleInputChange} half />
+                    <InputFieldComponent
+                      name='lastName'
+                      label='Last Name'
+                      handleChange={handleInputChange}
+                      half
+                      value={formData.lastName}
+                    />
                   </>
                 )}
                 <InputFieldComponent
@@ -107,8 +112,8 @@ const LoginAndRegisterComponent = () => {
                   label='Email'
                   type='email'
                   handleChange={handleInputChange}
-                  autoFocus
                   required
+                  value={formData.email}
                 />
                 <InputFieldComponent
                   name='password'
@@ -117,6 +122,7 @@ const LoginAndRegisterComponent = () => {
                   handleChange={handleInputChange}
                   handleShowPassword={toggleShowPassword}
                   required
+                  value={formData.password}
                 />
                 {userIsToRegister && (
                   <InputFieldComponent
@@ -125,9 +131,15 @@ const LoginAndRegisterComponent = () => {
                     handleChange={handleInputChange}
                     type='password'
                     required
+                    value={formData.confirmPassword}
                   />
                 )}
               </Grid>
+              {formHasError && (
+                <Alert className={authClasses.formErrorAlert} severity='error'>
+                  {formErrorData.message}
+                </Alert>
+              )}
               <div className={authClasses.submit}>
                 <Button type='submit' fullWidth variant='contained' color='primary'>
                   {userIsToRegister ? 'Register' : 'Login'}

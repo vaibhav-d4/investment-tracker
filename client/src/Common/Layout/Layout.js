@@ -15,6 +15,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Avatar,
 } from '@mui/material';
 
 // MUI ICONS
@@ -28,7 +29,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 // COMPONENTS IMPORTS
 import useStyles from './LayoutStyles';
-import { AppBar, Drawer, DrawerHeader } from '../Utils/LayoutUtils';
+import { AppBar, Drawer, DrawerHeader, StyledBadge } from '../Utils/LayoutUtils';
 import sideBarItemsList from './SideBarItems';
 
 // REDUX IMPORTS
@@ -36,6 +37,8 @@ import { toggleDrawerAction } from '../../Redux/Theme and Layout Redux/ThemeAndL
 import {
   toggleUserIsToRegisterAction,
   logoutAction,
+  formHasErrorAction,
+  initialFormDataAction,
 } from '../../Redux/Login and Register Redux/LoginAndRegisterAction';
 
 const Layout = (props) => {
@@ -45,8 +48,8 @@ const Layout = (props) => {
   const dispatch = useDispatch();
 
   const isDrawerOpen = useSelector((state) => state.themeAndLayout.isDrawerOpen);
-
   const userLoggedIn = useSelector((state) => state.loginAndRegister.userLoggedIn);
+  const currentUserData = useSelector((state) => state.loginAndRegister.userData);
 
   const handleToggleDrawer = () => {
     dispatch(toggleDrawerAction());
@@ -55,6 +58,8 @@ const Layout = (props) => {
   const handleLoginClick = () => {
     navigate('/login');
     dispatch(toggleUserIsToRegisterAction(false));
+    dispatch(formHasErrorAction(false));
+    dispatch(initialFormDataAction());
   };
 
   const handleLogoutClick = () => {
@@ -91,6 +96,22 @@ const Layout = (props) => {
               {process.env.REACT_APP_APPLICATION_NAME}
             </Typography>
             <Box sx={{ flexGrow: '1' }} />
+            {userLoggedIn && currentUserData && (
+              <>
+                <StyledBadge
+                  overlap='circular'
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                  variant='dot'
+                >
+                  <Avatar alt={currentUserData.name} src={currentUserData.imageUrl}>
+                    {currentUserData.name.charAt(0)}
+                  </Avatar>
+                </StyledBadge>
+                <div className={classes.userNameInAppBar}>
+                  <Typography variant='subtitle1'>{currentUserData.name}</Typography>
+                </div>
+              </>
+            )}
             <IconButton onClick={props.toggleColorMode} color='inherit'>
               {props.theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>

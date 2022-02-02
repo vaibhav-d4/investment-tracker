@@ -6,6 +6,12 @@ const checkUserisActive = () => {
   else return false;
 };
 
+const getCurrentUserDetails = () => {
+  const user = localStorage.getItem('user');
+  if (user) return JSON.parse(user);
+  else return {};
+};
+
 const initialState = {
   userIsToRegister: false,
   userInitialData: {
@@ -15,8 +21,10 @@ const initialState = {
     password: '',
     confirmPassword: '',
   },
-  userData: null,
+  userData: getCurrentUserDetails(),
   userLoggedIn: checkUserisActive(),
+  formHasError: false,
+  formErrorData: {},
 };
 
 export const LoginAndRegisterSlice = createSlice({
@@ -30,23 +38,37 @@ export const LoginAndRegisterSlice = createSlice({
       state.userInitialData = action.payload;
     },
     setAuthLocalStorageAfterAccess: (state, action) => {
-      state.userData = action.payload;
+      const data = action.payload;
       const setLocalStorageData = {
-        id: state.userData.userData._id,
-        name: state.userData.userData.name,
-        email: state.userData.userData.email,
+        id: data.userData._id,
+        name: data.userData.name,
+        email: data.userData.email,
+        imageUrl: data.userData.imageUrl,
       };
-      state.userLoggedIn = true;
       localStorage.setItem('user', JSON.stringify(setLocalStorageData));
+      state.userData = getCurrentUserDetails();
+      state.userLoggedIn = true;
     },
     userLogout: (state, action) => {
       localStorage.clear();
       state.userLoggedIn = false;
     },
+    formHasError: (state, action) => {
+      state.formHasError = action.payload;
+    },
+    formErrorData: (state, action) => {
+      state.formErrorData = action.payload;
+    },
   },
 });
 
-export const { toggleUserIsToRegister, formUserData, setAuthLocalStorageAfterAccess, userLogout } =
-  LoginAndRegisterSlice.actions;
+export const {
+  toggleUserIsToRegister,
+  formUserData,
+  setAuthLocalStorageAfterAccess,
+  userLogout,
+  formHasError,
+  formErrorData,
+} = LoginAndRegisterSlice.actions;
 
 export default LoginAndRegisterSlice.reducer;
