@@ -23,6 +23,8 @@ const initialState = {
   },
   userData: getCurrentUserDetails(),
   userLoggedIn: checkUserisActive(),
+  formHasError: false,
+  formErrorData: {},
 };
 
 export const LoginAndRegisterSlice = createSlice({
@@ -51,10 +53,22 @@ export const LoginAndRegisterSlice = createSlice({
       localStorage.clear();
       state.userLoggedIn = false;
     },
+    formHasError: (state, action) => {
+      state.formHasError = action.payload;
+    },
+    formErrorData: (state, action) => {
+      state.formErrorData = action.payload;
+    },
   },
 });
 
-export const { toggleUserIsToRegister, formUserData, setAuthLocalStorageAfterAccess, userLogout } =
-  LoginAndRegisterSlice.actions;
+export const {
+  toggleUserIsToRegister,
+  formUserData,
+  setAuthLocalStorageAfterAccess,
+  userLogout,
+  formHasError,
+  formErrorData,
+} = LoginAndRegisterSlice.actions;
 
 export default LoginAndRegisterSlice.reducer;

@@ -37,6 +37,8 @@ import { toggleDrawerAction } from '../../Redux/Theme and Layout Redux/ThemeAndL
 import {
   toggleUserIsToRegisterAction,
   logoutAction,
+  formHasErrorAction,
+  initialFormDataAction,
 } from '../../Redux/Login and Register Redux/LoginAndRegisterAction';
 
 const Layout = (props) => {
@@ -56,6 +58,8 @@ const Layout = (props) => {
   const handleLoginClick = () => {
     navigate('/login');
     dispatch(toggleUserIsToRegisterAction(false));
+    dispatch(formHasErrorAction(false));
+    dispatch(initialFormDataAction());
   };
 
   const handleLogoutClick = () => {

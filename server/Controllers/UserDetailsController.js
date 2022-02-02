@@ -69,13 +69,15 @@ export const login = async (req, res) => {
   const { email, password } = req.body;
   try {
     const existingUser = await UserDetailsCollection.findOne({ email });
-    if (!existingUser) return res.status(404).json({ message: "User doesn't exist" });
-    if (existingUser?.googleRegisteredUser === 'Yes')
-      return res.status(404).json({ message: 'Already registered with Google' });
+
+    if (!existingUser) return res.status(404).json({ message: "User doesn't exist." });
+
+    if (existingUser?.password === 'NA (Google User)')
+      return res.status(404).json({ message: 'Already registered with Google.' });
 
     const isPasswordValid = await bcrypt.compare(password, existingUser.password);
 
-    if (!isPasswordValid) return res.status(400).json({ message: 'Invalid Email and Password' });
+    if (!isPasswordValid) return res.status(400).json({ message: 'Invalid Email and Password.' });
 
     const jwtToken = jwt.sign(
       {

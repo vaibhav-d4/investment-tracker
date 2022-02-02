@@ -3,8 +3,19 @@ import {
   formUserData,
   setAuthLocalStorageAfterAccess,
   userLogout,
+  formHasError,
+  formErrorData,
 } from './LoginAndRegisterSlice';
 import * as api from '../../API/apis.js';
+
+// Initial user data when page loads or reopens
+const initialFormData = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+};
 
 // COMMON ACTIONS
 export const toggleUserIsToRegisterAction = (request) => async (dispatch) => {
@@ -13,6 +24,14 @@ export const toggleUserIsToRegisterAction = (request) => async (dispatch) => {
 
 export const formUserDataAction = (request) => async (dispatch) => {
   dispatch(formUserData(request));
+};
+
+export const formHasErrorAction = (request) => async (dispatch) => {
+  dispatch(formHasError(request));
+};
+
+export const initialFormDataAction = () => async (dispatch) => {
+  dispatch(formUserData(initialFormData));
 };
 
 // API ACTIONS
@@ -24,7 +43,14 @@ export const loginAction = (formData, navigate) => async (dispatch) => {
     dispatch(setAuthLocalStorageAfterAccess(data));
     navigate('/');
   } catch (error) {
-    console.log('loginAction ~ error', error);
+    dispatch(formHasError(true));
+    dispatch(
+      formErrorData(
+        error && error.response && error.response.data
+          ? error.response.data
+          : { message: 'Unexpected response. Please try again.' }
+      )
+    );
   }
 };
 
@@ -35,7 +61,14 @@ export const registerAction = (formData, navigate) => async (dispatch) => {
     dispatch(setAuthLocalStorageAfterAccess(data));
     navigate('/');
   } catch (error) {
-    console.log('registerAction ~ error', error);
+    dispatch(formHasError(true));
+    dispatch(
+      formErrorData(
+        error && error.response && error.response.data
+          ? error.response.data
+          : { message: 'Unexpected response. Please try again.' }
+      )
+    );
   }
 };
 
@@ -46,7 +79,14 @@ export const googleLoginAction = (userData, navigate) => async (dispatch) => {
     dispatch(setAuthLocalStorageAfterAccess(data));
     navigate('/');
   } catch (error) {
-    console.log('googleLoginAction ~ error', error);
+    dispatch(formHasError(true));
+    dispatch(
+      formErrorData(
+        error && error.response && error.response.data
+          ? error.response.data
+          : { message: 'Unexpected response. Please try again.' }
+      )
+    );
   }
 };
 

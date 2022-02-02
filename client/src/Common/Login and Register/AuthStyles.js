@@ -22,4 +22,7 @@ export default makeStyles((theme) => ({
   googleButton: {
     marginBottom: theme.spacing(2),
   },
+  formErrorAlert: {
+    marginTop: theme.spacing(2),
+  },
 }));
