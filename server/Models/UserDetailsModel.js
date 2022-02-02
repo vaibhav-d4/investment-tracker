@@ -10,4 +10,8 @@ const userSchema = mongoose.Schema({
   imageUrl: { type: String },
 });
 
-export default mongoose.model('User', userSchema, 'UserDetailsCollection');
+const dbConnection = mongoose.connection.useDb('UserDetailsDB');
+
+const UserDetailsDB = dbConnection.model('User', userSchema, 'UserDetailsCollection');
+
+export default UserDetailsDB;

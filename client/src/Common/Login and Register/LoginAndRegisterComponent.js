@@ -72,6 +72,7 @@ const LoginAndRegisterComponent = () => {
   };
 
   const toggleLoginAndRegister = () => {
+    dispatch(formUserDataAction(initialFormData));
     dispatch(toggleUserIsToRegisterAction(!userIsToRegister));
     if (!userIsToRegister) navigate('/register');
     else navigate('/login');
@@ -97,8 +98,15 @@ const LoginAndRegisterComponent = () => {
                       handleChange={handleInputChange}
                       required
                       half
+                      value={formData.firstName}
                     />
-                    <InputFieldComponent name='lastName' label='Last Name' handleChange={handleInputChange} half />
+                    <InputFieldComponent
+                      name='lastName'
+                      label='Last Name'
+                      handleChange={handleInputChange}
+                      half
+                      value={formData.lastName}
+                    />
                   </>
                 )}
                 <InputFieldComponent
@@ -107,6 +115,7 @@ const LoginAndRegisterComponent = () => {
                   type='email'
                   handleChange={handleInputChange}
                   required
+                  value={formData.email}
                 />
                 <InputFieldComponent
                   name='password'
@@ -115,6 +124,7 @@ const LoginAndRegisterComponent = () => {
                   handleChange={handleInputChange}
                   handleShowPassword={toggleShowPassword}
                   required
+                  value={formData.password}
                 />
                 {userIsToRegister && (
                   <InputFieldComponent
@@ -123,6 +133,7 @@ const LoginAndRegisterComponent = () => {
                     handleChange={handleInputChange}
                     type='password'
                     required
+                    value={formData.confirmPassword}
                   />
                 )}
               </Grid>
