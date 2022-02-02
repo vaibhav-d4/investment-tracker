@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import axios from 'axios';
 
 // FUNCTION IMPORTS
-import UserDetailsDB from '../Models/UserDetailsModel.js';
+import UserDetailsCollection from '../Models/UserDetailsModel.js';
 
 dotenv.config({ path: './Env/.env' });
 
@@ -34,7 +34,7 @@ const constructDataObject = (user) => {
 export const register = async (req, res) => {
   const { firstName, lastName, email, password, confirmPassword } = req.body;
   try {
-    const existingUser = await UserDetailsDB.findOne({ email });
+    const existingUser = await UserDetailsCollection.findOne({ email });
     if (existingUser) return res.status(400).json({ message: 'User already exists.' });
 
     if (password !== confirmPassword) return res.status(400).json({ message: "Password's do not match." });
@@ -42,7 +42,7 @@ export const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const registerTimestamp = await getCurrentTime();
-    const userData = await UserDetailsDB.create({
+    const userData = await UserDetailsCollection.create({
       name: `${firstName} ${lastName}`,
       email,
       password: hashedPassword,
@@ -68,7 +68,7 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   const { email, password } = req.body;
   try {
-    const existingUser = await UserDetailsDB.findOne({ email });
+    const existingUser = await UserDetailsCollection.findOne({ email });
     if (!existingUser) return res.status(404).json({ message: "User doesn't exist" });
     if (existingUser?.googleRegisteredUser === 'Yes')
       return res.status(404).json({ message: 'Already registered with Google' });
@@ -98,7 +98,7 @@ export const login = async (req, res) => {
 export const googleLogin = async (req, res) => {
   const { email, givenName, familyName, imageUrl } = req.body;
   try {
-    const existingUser = await UserDetailsDB.findOne({ email });
+    const existingUser = await UserDetailsCollection.findOne({ email });
 
     let userData = {};
     const registerTimestamp = await getCurrentTime();
@@ -109,9 +109,9 @@ export const googleLogin = async (req, res) => {
         googleRegisteredUser: 'Yes',
         imageUrl: imageUrl,
       };
-      userData = await UserDetailsDB.findOneAndUpdate({ email }, update, { new: true });
+      userData = await UserDetailsCollection.findOneAndUpdate({ email }, update, { new: true });
     } else {
-      userData = await UserDetailsDB.create({
+      userData = await UserDetailsCollection.create({
         name: `${givenName} ${familyName}`,
         email,
         password: 'NA (Google User)',
