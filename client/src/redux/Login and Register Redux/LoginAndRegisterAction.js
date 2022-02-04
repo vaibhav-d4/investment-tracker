@@ -5,6 +5,7 @@ import {
   userLogout,
   formHasError,
   formErrorData,
+  loadingForButton,
 } from './LoginAndRegisterSlice';
 import * as api from '../../API/apis.js';
 
@@ -34,6 +35,10 @@ export const initialFormDataAction = () => async (dispatch) => {
   dispatch(formUserData(initialFormData));
 };
 
+export const loadingForButtonAction = (request) => async (dispatch) => {
+  dispatch(loadingForButton(request));
+};
+
 // API ACTIONS
 
 // LOGIN ACTION
@@ -44,6 +49,7 @@ export const loginAction = (formData, navigate) => async (dispatch) => {
     navigate('/');
   } catch (error) {
     dispatch(formHasError(true));
+    dispatch(loadingForButton(false));
     dispatch(
       formErrorData(
         error && error.response && error.response.data
@@ -62,6 +68,7 @@ export const registerAction = (formData, navigate) => async (dispatch) => {
     navigate('/');
   } catch (error) {
     dispatch(formHasError(true));
+    dispatch(loadingForButton(false));
     dispatch(
       formErrorData(
         error && error.response && error.response.data

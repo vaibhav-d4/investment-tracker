@@ -25,6 +25,7 @@ const initialState = {
   userLoggedIn: checkUserisActive(),
   formHasError: false,
   formErrorData: {},
+  loadingForButton: false,
 };
 
 export const LoginAndRegisterSlice = createSlice({
@@ -59,6 +60,9 @@ export const LoginAndRegisterSlice = createSlice({
     formErrorData: (state, action) => {
       state.formErrorData = action.payload;
     },
+    loadingForButton: (state, action) => {
+      state.loadingForButton = action.payload;
+    },
   },
 });
 
@@ -69,6 +73,7 @@ export const {
   userLogout,
   formHasError,
   formErrorData,
+  loadingForButton,
 } = LoginAndRegisterSlice.actions;
 
 export default LoginAndRegisterSlice.reducer;
