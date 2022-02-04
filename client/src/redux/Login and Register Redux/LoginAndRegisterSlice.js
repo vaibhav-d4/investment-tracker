@@ -41,7 +41,7 @@ export const LoginAndRegisterSlice = createSlice({
     setAuthLocalStorageAfterAccess: (state, action) => {
       const data = action.payload;
       const setLocalStorageData = {
-        id: data.userData._id,
+        userId: data.userData._id,
         name: data.userData.name,
         email: data.userData.email,
         imageUrl: data.userData.imageUrl,
