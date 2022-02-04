@@ -7,7 +7,10 @@ import { Box, Tabs, Tab } from '@mui/material';
 // COMPONENT IMPORTS
 import { DrawerHeader } from '../../Common/Utils/LayoutUtils';
 import TabPanelComponent from '../../Common/Utils/TabPanelComponent';
+<<<<<<< HEAD
 import StockDataGrid from './StockDataGrid';
+=======
+>>>>>>> 1be46c9 (refs #STOCKS-Feature, tabs pane added)
 
 const StocksComponent = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -29,7 +32,11 @@ const StocksComponent = () => {
           Overview
         </TabPanelComponent>
         <TabPanelComponent value={activeTab} index={1}>
+<<<<<<< HEAD
           <StockDataGrid />
+=======
+          Transactions
+>>>>>>> 1be46c9 (refs #STOCKS-Feature, tabs pane added)
         </TabPanelComponent>
       </Box>
     </>
