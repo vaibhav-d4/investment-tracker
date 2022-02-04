@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router';
 
 // MUI IMPORTS
 import { Avatar, Box, Container, Grid, Paper, Button, Typography, Alert } from '@mui/material';
+// import LoadingButton from '@mui/lab/LoadingButton';
+import { LoadingButton } from '@mui/lab';
 
 // MUI ICONS IMPORTS
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -23,6 +25,7 @@ import {
   registerAction,
   formHasErrorAction,
   initialFormDataAction,
+  loadingForButtonAction,
 } from '../../Redux/Login and Register Redux/LoginAndRegisterAction';
 
 const LoginAndRegisterComponent = () => {
@@ -36,12 +39,15 @@ const LoginAndRegisterComponent = () => {
   const formData = useSelector((state) => state.loginAndRegister.userInitialData);
   const formHasError = useSelector((state) => state.loginAndRegister.formHasError);
   const formErrorData = useSelector((state) => state.loginAndRegister.formErrorData);
+  const loadingForButton = useSelector((state) => state.loginAndRegister.loadingForButton);
 
   // Set FormData as empty whenever this page loads up and change back to the login screen
   // Set register page or login page according to the URL
+  // Set login and register button loading state to false
   useEffect(() => {
     dispatch(initialFormDataAction());
     dispatch(formHasErrorAction(false));
+    dispatch(loadingForButtonAction(false));
     if (window.location.pathname === '/login') {
       dispatch(toggleUserIsToRegisterAction(false));
     } else if (window.location.pathname === '/register') {
@@ -60,6 +66,7 @@ const LoginAndRegisterComponent = () => {
 
   // Main login or register form submit
   const handleFormSubmit = (e) => {
+    dispatch(loadingForButtonAction(true));
     e.preventDefault();
     if (userIsToRegister) {
       dispatch(registerAction(formData, navigate));
@@ -141,9 +148,9 @@ const LoginAndRegisterComponent = () => {
                 </Alert>
               )}
               <div className={authClasses.submit}>
-                <Button type='submit' fullWidth variant='contained' color='primary'>
+                <LoadingButton loading={loadingForButton} type='submit' fullWidth variant='contained' color='primary'>
                   {userIsToRegister ? 'Register' : 'Login'}
-                </Button>
+                </LoadingButton>
               </div>
               {!userIsToRegister && <GoogleLoginComponent />}
               <Grid container justifyContent='flex-end'>
