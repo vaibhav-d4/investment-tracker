@@ -46,7 +46,7 @@ export const register = async (req, res) => {
       name: `${firstName} ${lastName}`,
       email,
       password: hashedPassword,
-      registerTimestamp: registerTimestamp,
+      registerTimestamp,
       googleRegisteredUser: 'No',
       localRegisteredUser: 'Yes',
       imageUrl: '',
@@ -109,7 +109,7 @@ export const googleLogin = async (req, res) => {
     } else if (existingUser) {
       const update = {
         googleRegisteredUser: 'Yes',
-        imageUrl: imageUrl,
+        imageUrl,
       };
       userData = await UserDetailsCollection.findOneAndUpdate({ email }, update, { new: true });
     } else {
@@ -117,10 +117,10 @@ export const googleLogin = async (req, res) => {
         name: `${givenName} ${familyName}`,
         email,
         password: 'NA (Google User)',
-        registerTimestamp: registerTimestamp,
+        registerTimestamp,
         googleRegisteredUser: 'Yes',
         localRegisteredUser: 'No',
-        imageUrl: imageUrl,
+        imageUrl,
       });
     }
 
