@@ -14,7 +14,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 // COMPONENT IMPORTS
 import useAuthStyles from './AuthStyles';
 import { DrawerHeader } from '../Utils/LayoutUtils';
-import InputFieldComponent from './InputFieldComponent';
+import InputFieldComponent from '../Utils/InputFieldComponent';
 import GoogleLoginComponent from './GoogleLoginComponent';
 
 // COMPONENT REDIX IMPORTS

@@ -2,7 +2,8 @@
 import React from 'react';
 
 // MUI IMPORTS
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { Button, Stack } from '@mui/material';
 
 // COMPONENTS IMPORTS
 
@@ -35,13 +36,29 @@ const StockDataGrid = () => {
     { field: 'col2', headerName: 'Column 2', width: 150 },
   ];
   return (
-    <div style={{ height: '500px', width: '100%' }}>
-      <div style={{ display: 'flex', height: '100%' }}>
-        <div style={{ flexGrow: 1 }}>
-          <DataGrid rows={rows} columns={columns} autoPageSize density='compact' />
+    <>
+      <Stack sx={{ mt: -1, mb: 1 }} direction='row' alignItems='flex-start' justifyContent='flex-end' spacing={2}>
+        <Button size='small' variant='contained' onClick={() => {}}>
+          Add Transaction
+        </Button>
+      </Stack>
+      <div style={{ height: '500px', width: '100%' }}>
+        <div style={{ display: 'flex', height: '100%' }}>
+          <div style={{ flexGrow: 1 }}>
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              autoPageSize
+              density='compact'
+              loading={false}
+              components={{
+                Toolbar: GridToolbar,
+              }}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

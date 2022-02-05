@@ -16,6 +16,7 @@ import {
   ListItemIcon,
   ListItemText,
   Avatar,
+  Tooltip,
 } from '@mui/material';
 
 // MUI ICONS
@@ -112,17 +113,23 @@ const Layout = (props) => {
                 </div>
               </>
             )}
-            <IconButton onClick={props.toggleColorMode} color='inherit'>
-              {props.theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-            </IconButton>
+            <Tooltip title='Change Theme' arrow>
+              <IconButton onClick={props.toggleColorMode} color='inherit'>
+                {props.theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+              </IconButton>
+            </Tooltip>
             {!userLoggedIn ? (
-              <IconButton onClick={handleLoginClick} color='inherit'>
-                <LoginIcon />
-              </IconButton>
+              <Tooltip title='Login' arrow>
+                <IconButton onClick={handleLoginClick} color='inherit'>
+                  <LoginIcon />
+                </IconButton>
+              </Tooltip>
             ) : (
-              <IconButton onClick={handleLogoutClick} color='inherit'>
-                <LogoutIcon />
-              </IconButton>
+              <Tooltip title='Log out' arrow>
+                <IconButton onClick={handleLogoutClick} color='inherit'>
+                  <LogoutIcon />
+                </IconButton>
+              </Tooltip>
             )}
           </Toolbar>
         </AppBar>
