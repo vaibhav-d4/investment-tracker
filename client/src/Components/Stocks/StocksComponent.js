@@ -17,7 +17,7 @@ const StocksComponent = () => {
   };
   return (
     <>
-      <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
+      <Box component='main' sx={{ flexGrow: 1, p: 3, mt: -3, ml: -3 }}>
         <DrawerHeader />
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={activeTab} onChange={handleTabOnChange}>
