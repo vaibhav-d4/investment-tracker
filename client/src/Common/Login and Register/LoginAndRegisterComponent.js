@@ -144,7 +144,7 @@ const LoginAndRegisterComponent = () => {
               </Grid>
               {formHasError && (
                 <Alert className={authClasses.formErrorAlert} severity='error'>
-                  {formErrorData.message}
+                  {formErrorData.message || formErrorData.error}
                 </Alert>
               )}
               <div className={authClasses.submit}>
