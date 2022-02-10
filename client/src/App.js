@@ -53,28 +53,23 @@ const App = () => {
             {/* <Route exact path='/'>
               {loggedIn ? <Redirect to='/dashboard' /> : <PublicHomePage />}
             </Route> */}
-            {/* DEFAULT HOME PATH ROUTE */}
-            <Route exact path='/' element={<Navigate to='/home' />} />
+            {/* DEFAULT LOGIN PATH ROUTE */}
+            <Route exact path='/' element={<Navigate to='/login' />} />
             {/* AUTH ROUTES */}
-            <Route exact path='/login' element={<LoginAndRegisterComponent />} />
+            <Route
+              exact
+              path='/login'
+              element={userLoggedIn ? <Navigate to='/home' /> : <LoginAndRegisterComponent />}
+            />
             <Route exact path='/register' element={<LoginAndRegisterComponent />} />
             <Route exact path='/unauthorized' element={<UnauthorizedComponent />} />
             {/* COMPONENTS ROUTE */}
-            {/* <Route exact path='/home' element={<HomeComponent />} /> */}
             <Route exact path='/home' element={userLoggedIn ? <HomeComponent /> : <Navigate to='/unauthorized' />} />
-            <Route exact path='/banks' element={userLoggedIn ? <BankComponent /> : <Navigate to='/unauthorized' />} />
-            <Route
-              exact
-              path='/stocks'
-              element={userLoggedIn ? <StocksComponent /> : <Navigate to='/unauthorized' />}
-            />
-            <Route
-              exact
-              path='/mutualfunds'
-              element={userLoggedIn ? <MFComponent /> : <Navigate to='/unauthorized' />}
-            />
-            <Route exact path='/fd' element={userLoggedIn ? <FDComponent /> : <Navigate to='/unauthorized' />} />
-            <Route exact path='/gold' element={userLoggedIn ? <GoldComponent /> : <Navigate to='/unauthorized' />} />
+            <Route exact path='/banks' element={<BankComponent />} />
+            <Route path='/stocks/*' element={<StocksComponent />} />
+            <Route exact path='/mutualfunds' element={<MFComponent />} />
+            <Route exact path='/fd' element={<FDComponent />} />
+            <Route exact path='/gold' element={<GoldComponent />} />
             {/* PAGE NOT FOUND */}
             <Route path='*' element={<PageNotFoundComponent />} />
           </Routes>

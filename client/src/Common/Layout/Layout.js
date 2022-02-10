@@ -90,7 +90,9 @@ const Layout = (props) => {
             </IconButton>
             <Typography
               type='link'
-              onClick={() => navigate('/home')}
+              onClick={() => {
+                userLoggedIn ? navigate('/home') : navigate('/login');
+              }}
               variant='h5'
               noWrap
               component='div'
