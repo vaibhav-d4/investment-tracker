@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 
 // ROUTES IMPORTS
 import UserDetailsRoutes from './Routes/UserDetailsRoutes.js';
+import StockRoutes from './Routes/StockRoutes.js';
 
 const app = express();
 dotenv.config({ path: './Env/.env' });
@@ -16,6 +17,7 @@ app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
 
 app.use('/user', UserDetailsRoutes);
+app.use('/stocks', StockRoutes);
 
 app.get('/', (req, res) => {
   res.send('APP IS RUNNING');
