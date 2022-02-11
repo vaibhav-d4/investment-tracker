@@ -6,6 +6,8 @@ import {
   formHasError,
   formErrorData,
   loadingForButton,
+  isSessionExpired,
+  isLogoutBtnClicked,
 } from './LoginAndRegisterSlice';
 import * as api from '../../API/apis.js';
 
@@ -37,6 +39,14 @@ export const initialFormDataAction = () => async (dispatch) => {
 
 export const loadingForButtonAction = (request) => async (dispatch) => {
   dispatch(loadingForButton(request));
+};
+
+export const isSessionExpiredAction = (request) => async (dispatch) => {
+  dispatch(isSessionExpired(request));
+};
+
+export const isLogoutBtnClickedAction = (request) => async (dispatch) => {
+  dispatch(isLogoutBtnClicked(request));
 };
 
 ///////////////////////// API ACTIONS /////////////////////////////////

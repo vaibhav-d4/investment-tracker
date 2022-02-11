@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import axios from 'axios';
 
 // FUNCTION IMPORTS
-import UserDetailsCollection from '../Models/UserDetailsModel.js';
+import UserDetailsCollection from '../../Models/Users/UserDetailsModel.js';
 
 dotenv.config({ path: './Env/.env' });
 
@@ -46,13 +46,13 @@ export const register = async (req, res) => {
       name: `${firstName} ${lastName}`,
       email,
       password: hashedPassword,
-      registerTimestamp: registerTimestamp,
+      registerTimestamp,
       googleRegisteredUser: 'No',
       localRegisteredUser: 'Yes',
       imageUrl: '',
     });
 
-    const jwtToken = jwt.sign({ id: userData._id, email: userData.email }, process.env.JWT_SECRET_KEY, {
+    const jwtToken = jwt.sign({ userId: userData._id, email: userData.email }, process.env.JWT_SECRET_KEY, {
       expiresIn: '1h',
     });
 
@@ -109,7 +109,7 @@ export const googleLogin = async (req, res) => {
     } else if (existingUser) {
       const update = {
         googleRegisteredUser: 'Yes',
-        imageUrl: imageUrl,
+        imageUrl,
       };
       userData = await UserDetailsCollection.findOneAndUpdate({ email }, update, { new: true });
     } else {
@@ -117,10 +117,10 @@ export const googleLogin = async (req, res) => {
         name: `${givenName} ${familyName}`,
         email,
         password: 'NA (Google User)',
-        registerTimestamp: registerTimestamp,
+        registerTimestamp,
         googleRegisteredUser: 'Yes',
         localRegisteredUser: 'No',
-        imageUrl: imageUrl,
+        imageUrl,
       });
     }
 

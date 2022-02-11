@@ -2,7 +2,7 @@
 import express from 'express';
 
 // FUNCTIONS IMPORTS
-import { login, register, googleLogin } from '../Controllers/UserDetailsController.js';
+import { login, register, googleLogin } from '../../Controllers/Users/UserDetailsController.js';
 
 const router = express.Router();
 

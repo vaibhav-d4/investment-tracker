@@ -8,13 +8,13 @@ export default makeStyles((theme) => ({
     alignItems: 'center',
     padding: theme.spacing(2),
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
+  // avatar: {
+  //   margin: theme.spacing(1),
+  //   backgroundColor: theme.palette.secondary.main,
+  // },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(2),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -24,5 +24,8 @@ export default makeStyles((theme) => ({
   },
   formErrorAlert: {
     marginTop: theme.spacing(2),
+  },
+  loginText: {
+    marginTop: theme.spacing(-2),
   },
 }));

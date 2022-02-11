@@ -1,7 +1,8 @@
 // REACT IMPORTS
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
+import { isJwtExpired } from 'jwt-check-expiration';
 
 // MUI IMPORTS
 import { useTheme } from '@mui/material/styles';
@@ -16,6 +17,7 @@ import {
   ListItemIcon,
   ListItemText,
   Avatar,
+  Tooltip,
 } from '@mui/material';
 
 // MUI ICONS
@@ -34,13 +36,14 @@ import {
   logoutAction,
   formHasErrorAction,
   initialFormDataAction,
+  isSessionExpiredAction,
+  isLogoutBtnClickedAction,
 } from '../../Redux/Login and Register Redux/LoginAndRegisterAction';
 
 // COMPONENTS IMPORTS
 import useStyles from './LayoutStyles';
 import { AppBar, Drawer, DrawerHeader, StyledBadge } from '../Utils/LayoutUtils';
 import sideBarItemsList from './SideBarItems';
-import JWTExpiryUtil from '../Utils/JWTExpiryUtil';
 
 const Layout = (props) => {
   const theme = useTheme();
@@ -52,6 +55,18 @@ const Layout = (props) => {
   const userLoggedIn = useSelector((state) => state.loginAndRegister.userLoggedIn);
   const currentUserData = useSelector((state) => state.loginAndRegister.userData);
 
+  useEffect(() => {
+    const userJWTToken = currentUserData?.jwtToken;
+    if (userJWTToken) {
+      const isTokenExpired = isJwtExpired(userJWTToken);
+      if (isTokenExpired) {
+        dispatch(logoutAction());
+        dispatch(isSessionExpiredAction(true));
+        navigate('/logout');
+      }
+    }
+  });
+
   const handleToggleDrawer = () => {
     dispatch(toggleDrawerAction());
   };
@@ -60,19 +75,20 @@ const Layout = (props) => {
     navigate('/login');
     dispatch(toggleUserIsToRegisterAction(false));
     dispatch(formHasErrorAction(false));
+    dispatch(isSessionExpiredAction(false));
     dispatch(initialFormDataAction());
   };
 
   const handleLogoutClick = () => {
-    navigate('/login');
+    navigate('/logout');
     dispatch(logoutAction());
+    dispatch(isLogoutBtnClickedAction(true));
   };
 
   return (
     <>
       <Box className={classes.layoutContainer}>
         <CssBaseline />
-        <JWTExpiryUtil />
         <AppBar position='fixed' open={isDrawerOpen}>
           <Toolbar>
             <IconButton
@@ -89,7 +105,9 @@ const Layout = (props) => {
             </IconButton>
             <Typography
               type='link'
-              onClick={() => navigate('/home')}
+              onClick={() => {
+                userLoggedIn ? navigate('/home') : navigate('/login');
+              }}
               variant='h5'
               noWrap
               component='div'
@@ -114,17 +132,23 @@ const Layout = (props) => {
                 </div>
               </>
             )}
-            <IconButton onClick={props.toggleColorMode} color='inherit'>
-              {props.theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-            </IconButton>
+            <Tooltip title='Change Theme' arrow>
+              <IconButton onClick={props.toggleColorMode} color='inherit'>
+                {props.theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+              </IconButton>
+            </Tooltip>
             {!userLoggedIn ? (
-              <IconButton onClick={handleLoginClick} color='inherit'>
-                <LoginIcon />
-              </IconButton>
+              <Tooltip title='Login' arrow>
+                <IconButton onClick={handleLoginClick} color='inherit'>
+                  <LoginIcon />
+                </IconButton>
+              </Tooltip>
             ) : (
-              <IconButton onClick={handleLogoutClick} color='inherit'>
-                <LogoutIcon />
-              </IconButton>
+              <Tooltip title='Log out' arrow>
+                <IconButton onClick={handleLogoutClick} color='inherit'>
+                  <LogoutIcon />
+                </IconButton>
+              </Tooltip>
             )}
           </Toolbar>
         </AppBar>
