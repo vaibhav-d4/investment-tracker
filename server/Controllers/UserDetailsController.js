@@ -85,7 +85,7 @@ export const login = async (req, res) => {
         email: existingUser.email,
       },
       process.env.JWT_SECRET_KEY,
-      { expiresIn: '1h' }
+      { expiresIn: 10 }
     );
 
     const dataToSend = constructDataObject(existingUser);

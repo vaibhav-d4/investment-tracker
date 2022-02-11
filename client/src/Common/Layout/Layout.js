@@ -27,11 +27,6 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 
-// COMPONENTS IMPORTS
-import useStyles from './LayoutStyles';
-import { AppBar, Drawer, DrawerHeader, StyledBadge } from '../Utils/LayoutUtils';
-import sideBarItemsList from './SideBarItems';
-
 // REDUX IMPORTS
 import { toggleDrawerAction } from '../../Redux/Theme and Layout Redux/ThemeAndLayoutAction';
 import {
@@ -40,6 +35,12 @@ import {
   formHasErrorAction,
   initialFormDataAction,
 } from '../../Redux/Login and Register Redux/LoginAndRegisterAction';
+
+// COMPONENTS IMPORTS
+import useStyles from './LayoutStyles';
+import { AppBar, Drawer, DrawerHeader, StyledBadge } from '../Utils/LayoutUtils';
+import sideBarItemsList from './SideBarItems';
+import JWTExpiryUtil from '../Utils/JWTExpiryUtil';
 
 const Layout = (props) => {
   const theme = useTheme();
@@ -71,6 +72,7 @@ const Layout = (props) => {
     <>
       <Box className={classes.layoutContainer}>
         <CssBaseline />
+        <JWTExpiryUtil />
         <AppBar position='fixed' open={isDrawerOpen}>
           <Toolbar>
             <IconButton
@@ -103,12 +105,12 @@ const Layout = (props) => {
                   anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                   variant='dot'
                 >
-                  <Avatar alt={currentUserData.name} src={currentUserData.imageUrl}>
-                    {currentUserData.name.charAt(0)}
+                  <Avatar alt={currentUserData.userInfo.name} src={currentUserData.userInfo.imageUrl}>
+                    {currentUserData.userInfo.name.charAt(0)}
                   </Avatar>
                 </StyledBadge>
                 <div className={classes.userNameInAppBar}>
-                  <Typography variant='subtitle1'>{currentUserData.name}</Typography>
+                  <Typography variant='subtitle1'>{currentUserData.userInfo.name}</Typography>
                 </div>
               </>
             )}
