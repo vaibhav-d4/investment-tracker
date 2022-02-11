@@ -4,18 +4,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 
 // MUI IMPORTS
-import { Avatar, Box, Container, Grid, Paper, Button, Typography, Alert } from '@mui/material';
+import { Box, Container, Grid, Paper, Button, Typography, Alert } from '@mui/material';
 // import LoadingButton from '@mui/lab/LoadingButton';
 import { LoadingButton } from '@mui/lab';
 
-// MUI ICONS IMPORTS
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-
 // COMPONENT IMPORTS
 import useAuthStyles from './AuthStyles';
+import useCommonStyles from '../Common Pages/CommonStyles';
 import { DrawerHeader } from '../Utils/LayoutUtils';
 import InputFieldComponent from '../Utils/InputFieldComponent';
 import GoogleLoginComponent from './GoogleLoginComponent';
+import login from '../Images/login.png';
 
 // COMPONENT REDIX IMPORTS
 import {
@@ -26,10 +25,12 @@ import {
   formHasErrorAction,
   initialFormDataAction,
   loadingForButtonAction,
+  isSessionExpiredAction,
 } from '../../Redux/Login and Register Redux/LoginAndRegisterAction';
 
 const LoginAndRegisterComponent = () => {
   const authClasses = useAuthStyles();
+  const commonClasses = useCommonStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -66,8 +67,9 @@ const LoginAndRegisterComponent = () => {
 
   // Main login or register form submit
   const handleFormSubmit = (e) => {
-    dispatch(loadingForButtonAction(true));
     e.preventDefault();
+    dispatch(loadingForButtonAction(true));
+    dispatch(isSessionExpiredAction(false));
     if (userIsToRegister) {
       dispatch(registerAction(formData, navigate));
     } else {
@@ -89,10 +91,12 @@ const LoginAndRegisterComponent = () => {
         <DrawerHeader />
         <Container component='main' maxWidth='xs'>
           <Paper className={authClasses.paper} elevation={3}>
-            <Avatar className={authClasses.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography variant='h5'>{userIsToRegister ? 'Register' : 'Login'}</Typography>
+            <div className={commonClasses.topAndBottomMargin}>
+              <img src={login} alt='Page Not Found' height='50' width='50' />
+            </div>
+            <div className={authClasses.loginText}>
+              <Typography variant='h5'>{userIsToRegister ? 'Register' : 'Login'}</Typography>
+            </div>
             <form className={authClasses.form} onSubmit={handleFormSubmit}>
               <Grid container spacing={2}>
                 {userIsToRegister && (

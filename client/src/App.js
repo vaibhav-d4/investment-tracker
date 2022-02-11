@@ -18,6 +18,7 @@ import GoldComponent from './Components/Gold/GoldComponent';
 import LoginAndRegisterComponent from './Common/Login and Register/LoginAndRegisterComponent';
 import UnauthorizedComponent from './Common/Common Pages/UnauthorizedComponent';
 import PageNotFoundComponent from './Common/Common Pages/PageNotFoundComponent';
+import LogoutComponent from './Common/Login and Register/LogoutComponent';
 
 // REDUX IMPORTS
 import { changeThemeAction } from './Redux/Theme and Layout Redux/ThemeAndLayoutAction';
@@ -29,6 +30,8 @@ const App = () => {
   const themeMode = useSelector((state) => state.themeAndLayout.themeMode);
 
   const userLoggedIn = useSelector((state) => state.loginAndRegister.userLoggedIn);
+  const isLogoutBtnClicked = useSelector((state) => state.loginAndRegister.isLogoutBtnClicked);
+  const isSessionExpired = useSelector((state) => state.loginAndRegister.isSessionExpired);
 
   const theme = createTheme({
     palette: {
@@ -62,6 +65,19 @@ const App = () => {
               element={userLoggedIn ? <Navigate to='/home' /> : <LoginAndRegisterComponent />}
             />
             <Route exact path='/register' element={<LoginAndRegisterComponent />} />
+            <Route
+              exact
+              path='/logout'
+              element={
+                userLoggedIn ? (
+                  <Navigate to='/home' />
+                ) : isLogoutBtnClicked || isSessionExpired ? (
+                  <LogoutComponent />
+                ) : (
+                  <Navigate to='/login' />
+                )
+              }
+            />
             <Route exact path='/unauthorized' element={<UnauthorizedComponent />} />
             {/* COMPONENTS ROUTE */}
             <Route exact path='/home' element={userLoggedIn ? <HomeComponent /> : <Navigate to='/unauthorized' />} />

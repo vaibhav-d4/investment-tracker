@@ -6,12 +6,12 @@ import { useNavigate } from 'react-router';
 import { Box, Container, Paper, Typography, Button } from '@mui/material';
 
 // COMPONENT IMPORTS
-import useStyles from './UnauthorizeStyles';
+import useStyles from './CommonStyles';
 import unauthorizedImage from '../Images/unauthorized.png';
 import { DrawerHeader } from '../Utils/LayoutUtils';
 
 const UnauthorizedComponent = () => {
-  const unauthorizeClasses = useStyles();
+  const commonClasses = useStyles();
   const navigate = useNavigate();
 
   return (
@@ -19,13 +19,13 @@ const UnauthorizedComponent = () => {
       <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Container component='main' maxWidth='xs'>
-          <Paper className={unauthorizeClasses.paper} elevation={3}>
-            <div className={unauthorizeClasses.topAndBottomMargin}>
+          <Paper className={commonClasses.paper} elevation={3}>
+            <div className={commonClasses.topAndBottomMargin}>
               <img src={unauthorizedImage} alt='unauthorized' height='100' width='100' />
             </div>
             <Typography variant='h6'>Please Login to Continue</Typography>
-            <div className={unauthorizeClasses.topAndBottomMargin}>
-              <Button variant='contained' onClick={() => navigate('/login')} className={unauthorizeClasses.image}>
+            <div className={commonClasses.topAndBottomMargin}>
+              <Button variant='contained' onClick={() => navigate('/login')} className={commonClasses.image}>
                 Login
               </Button>
             </div>

@@ -26,6 +26,8 @@ const initialState = {
   formHasError: false,
   formErrorData: {},
   loadingForButton: false,
+  isSessionExpired: false,
+  isLogoutBtnClicked: false,
 };
 
 export const LoginAndRegisterSlice = createSlice({
@@ -67,6 +69,12 @@ export const LoginAndRegisterSlice = createSlice({
     loadingForButton: (state, action) => {
       state.loadingForButton = action.payload;
     },
+    isSessionExpired: (state, action) => {
+      state.isSessionExpired = action.payload;
+    },
+    isLogoutBtnClicked: (state, action) => {
+      state.isLogoutBtnClicked = action.payload;
+    },
   },
 });
 
@@ -78,6 +86,8 @@ export const {
   formHasError,
   formErrorData,
   loadingForButton,
+  isSessionExpired,
+  isLogoutBtnClicked,
 } = LoginAndRegisterSlice.actions;
 
 export default LoginAndRegisterSlice.reducer;
