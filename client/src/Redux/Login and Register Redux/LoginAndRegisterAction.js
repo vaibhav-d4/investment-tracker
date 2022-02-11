@@ -18,7 +18,7 @@ const initialFormData = {
   confirmPassword: '',
 };
 
-// COMMON ACTIONS
+///////////////////////// COMMON ACTIONS ///////////////////////////////////////
 export const toggleUserIsToRegisterAction = (request) => async (dispatch) => {
   dispatch(toggleUserIsToRegister(request));
 };
@@ -39,8 +39,7 @@ export const loadingForButtonAction = (request) => async (dispatch) => {
   dispatch(loadingForButton(request));
 };
 
-// API ACTIONS
-
+///////////////////////// API ACTIONS /////////////////////////////////
 // LOGIN ACTION
 export const loginAction = (formData, navigate) => async (dispatch) => {
   try {

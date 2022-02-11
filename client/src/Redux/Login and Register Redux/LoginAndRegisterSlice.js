@@ -39,19 +39,23 @@ export const LoginAndRegisterSlice = createSlice({
       state.userInitialData = action.payload;
     },
     setAuthLocalStorageAfterAccess: (state, action) => {
-      const data = action.payload;
+      const receivedData = action.payload;
       const setLocalStorageData = {
-        userId: data.userData._id,
-        name: data.userData.name,
-        email: data.userData.email,
-        imageUrl: data.userData.imageUrl,
+        userInfo: {
+          userId: receivedData.userData._id,
+          name: receivedData.userData.name,
+          email: receivedData.userData.email,
+          imageUrl: receivedData.userData.imageUrl,
+        },
+        jwtToken: receivedData.jwtToken,
       };
       localStorage.setItem('user', JSON.stringify(setLocalStorageData));
       state.userData = getCurrentUserDetails();
       state.userLoggedIn = true;
     },
-    userLogout: (state, action) => {
+    userLogout: (state) => {
       localStorage.clear();
+      state.userData = {};
       state.userLoggedIn = false;
     },
     formHasError: (state, action) => {
