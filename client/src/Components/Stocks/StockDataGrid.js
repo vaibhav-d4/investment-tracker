@@ -37,12 +37,12 @@ const StockDataGrid = () => {
   ];
   return (
     <>
-      <Stack sx={{ mt: -1, mb: 1 }} direction='row' alignItems='flex-start' justifyContent='flex-end' spacing={2}>
+      <Stack sx={{ mt: -2, mb: 1 }} direction='row' alignItems='flex-start' justifyContent='flex-end' spacing={2}>
         <Button size='small' variant='contained' onClick={() => {}}>
           Add Transaction
         </Button>
       </Stack>
-      <div style={{ height: '500px', width: '100%' }}>
+      <div style={{ height: '70vh', width: '100%' }}>
         <div style={{ display: 'flex', height: '100%' }}>
           <div style={{ flexGrow: 1 }}>
             <DataGrid

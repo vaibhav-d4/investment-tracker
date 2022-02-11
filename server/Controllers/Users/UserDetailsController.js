@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import axios from 'axios';
 
 // FUNCTION IMPORTS
-import UserDetailsCollection from '../Models/UserDetailsModel.js';
+import UserDetailsCollection from '../../Models/Users/UserDetailsModel.js';
 
 dotenv.config({ path: './Env/.env' });
 

@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
 // FUNCTION IMPORTS
-import StockTransactionsCollection from '../Models/StockTransactionsModel.js';
+import StockTransactionsCollection from '../../Models/Stocks/StockTransactionsModel.js';
 
 dotenv.config({ path: './Env/.env' });
 

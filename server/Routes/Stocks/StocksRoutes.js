@@ -2,7 +2,7 @@
 import express from 'express';
 
 // FUNCTIONS IMPORTS
-import { getTransactions, insertTransaction } from '../Controllers/StockTransactionsController.js';
+import { getTransactions, insertTransaction } from '../../Controllers/Stocks/StockTransactionsController.js';
 
 const router = express.Router();
 
