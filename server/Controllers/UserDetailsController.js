@@ -52,7 +52,7 @@ export const register = async (req, res) => {
       imageUrl: '',
     });
 
-    const jwtToken = jwt.sign({ id: userData._id, email: userData.email }, process.env.JWT_SECRET_KEY, {
+    const jwtToken = jwt.sign({ userId: userData._id, email: userData.email }, process.env.JWT_SECRET_KEY, {
       expiresIn: '1h',
     });
 
