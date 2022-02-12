@@ -19,7 +19,7 @@ const DataGridColumns = [
   { field: 'userEmail', headerName: 'Email', headerAlign: 'center', description: 'User Email', width: 150, hide: true },
   {
     field: 'depositoryName',
-    headerName: 'DepositoryName',
+    headerName: 'Depository Name',
     headerAlign: 'center',
     description: 'The Depository in which you have invested.',
     width: 150,
@@ -27,7 +27,7 @@ const DataGridColumns = [
   },
   {
     field: 'companyName',
-    headerName: 'CompanyName',
+    headerName: 'Company Name',
     headerAlign: 'center',
     description: 'The company in which you have invested.',
     width: 150,

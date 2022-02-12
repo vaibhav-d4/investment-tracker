@@ -3,27 +3,27 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 // MUI IMPORTS
-import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Grid, Box, TextField } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Grid, TextField } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import DateAdapter from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 
 // COMPONENTS IMPORTS
-import useDialogStyles from '../../../../Common/Utils/Styles/DialogStyles';
+// import useDialogStyles from '../../../../Common/Utils/Styles/DialogStyles';
 import InputFieldComponent from '../../../../Common/Utils/Component Utils/InputFieldComponent';
 
 // REDUX ACTIONS IMPORTS
 import {
-  isAddTransactionDialogOpenAction,
-  addTransactionFormDataAction,
-  addTransactionInitialDataAction,
-  isAddTransactionSubmitLoadingAction,
-  addTransactionAction,
-} from '../../../../Redux/Stocks Redux/StocksActions';
+  isDialogOpenAction,
+  formDataAction,
+  initialDataAction,
+  isSubmitLoadingAction,
+  formSubmitAction,
+} from '../../../../Redux/Stocks Redux/AddTransactionActions';
 
 const AddTransactionDialog = () => {
-  const dialogClasses = useDialogStyles();
+  // const dialogClasses = useDialogStyles();
   const dispatch = useDispatch();
 
   const todayDate = new Date();
@@ -33,36 +33,37 @@ const AddTransactionDialog = () => {
   const isAddTransactionSubmitLoading = useSelector((state) => state.stocks.isAddTransactionSubmitLoading);
 
   const handleDialogClose = () => {
-    dispatch(addTransactionInitialDataAction());
-    dispatch(isAddTransactionDialogOpenAction(false));
-    dispatch(isAddTransactionSubmitLoadingAction(false));
+    dispatch(initialDataAction());
+    dispatch(isDialogOpenAction(false));
+    dispatch(isSubmitLoadingAction(false));
   };
 
   const handleInputDataChange = (e) => {
-    dispatch(addTransactionFormDataAction({ ...addTransactionFormData, [e.target.name]: e.target.value }));
+    dispatch(formDataAction({ ...addTransactionFormData, [e.target.name]: e.target.value }));
   };
 
   const handleDateChange = (newDateValue) => {
-    dispatch(addTransactionFormDataAction({ ...addTransactionFormData, buyDate: JSON.stringify(newDateValue) }));
+    dispatch(formDataAction({ ...addTransactionFormData, buyDate: JSON.stringify(newDateValue) }));
   };
 
   // MAIN ADD TRANSACTION FORM SUBMIT
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    dispatch(isAddTransactionSubmitLoadingAction(true));
-    dispatch(addTransactionAction(addTransactionFormData));
+    dispatch(isSubmitLoadingAction(true));
+    dispatch(formSubmitAction(addTransactionFormData));
   };
 
   return (
     <>
       <Dialog open={isAddTransactionDialogOpen} onClose={handleDialogClose} scroll='paper' fullWidth maxWidth='sm'>
         <DialogTitle>Add a New Transaction</DialogTitle>
-        <DialogContent>
-          <Box component='form' autoComplete='off' className={dialogClasses.inputFields}>
+        <form autoComplete='off' onSubmit={handleFormSubmit}>
+          <DialogContent>
             <Grid container spacing={2}>
               <InputFieldComponent
                 name='depositoryName'
                 label='Depository Name'
+                type='text'
                 value={addTransactionFormData.depositoryName}
                 handleChange={handleInputDataChange}
                 required
@@ -71,6 +72,7 @@ const AddTransactionDialog = () => {
               <InputFieldComponent
                 name='companyName'
                 label='Company Name'
+                type='text'
                 value={addTransactionFormData.companyName}
                 handleChange={handleInputDataChange}
                 required
@@ -79,6 +81,7 @@ const AddTransactionDialog = () => {
               <InputFieldComponent
                 name='googleSymbol'
                 label='Google Symbol'
+                type='text'
                 value={addTransactionFormData.googleSymbol}
                 handleChange={handleInputDataChange}
                 required
@@ -87,6 +90,7 @@ const AddTransactionDialog = () => {
               <InputFieldComponent
                 name='yahooSymbol'
                 label='Yahoo Symbol'
+                type='text'
                 value={addTransactionFormData.yahooSymbol}
                 handleChange={handleInputDataChange}
                 required
@@ -109,6 +113,7 @@ const AddTransactionDialog = () => {
               <InputFieldComponent
                 name='noOfShares'
                 label='Number of Shares'
+                type='number'
                 value={addTransactionFormData.noOfShares}
                 handleChange={handleInputDataChange}
                 required
@@ -117,28 +122,23 @@ const AddTransactionDialog = () => {
               <InputFieldComponent
                 name='priceOfShareAtBuy'
                 label='Price of Share when Bought'
+                type='number'
                 value={addTransactionFormData.priceOfShareAtBuy}
                 handleChange={handleInputDataChange}
                 required
                 half
               />
             </Grid>
-          </Box>
-        </DialogContent>
-        <DialogActions>
-          <Button variant='text' color='primary' onClick={handleDialogClose}>
-            Cancel
-          </Button>
-          <LoadingButton
-            loading={isAddTransactionSubmitLoading}
-            variant='text'
-            color='primary'
-            type='submit'
-            onClick={handleFormSubmit}
-          >
-            Submit
-          </LoadingButton>
-        </DialogActions>
+          </DialogContent>
+          <DialogActions>
+            <Button variant='text' color='primary' onClick={handleDialogClose}>
+              Cancel
+            </Button>
+            <LoadingButton loading={isAddTransactionSubmitLoading} variant='text' color='primary' type='submit'>
+              Submit
+            </LoadingButton>
+          </DialogActions>
+        </form>
       </Dialog>
     </>
   );

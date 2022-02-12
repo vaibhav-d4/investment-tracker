@@ -16,23 +16,25 @@ const addTransactionInitialData = {
 };
 
 ///////////////////////// COMMON ACTIONS /////////////////////////
-export const isAddTransactionDialogOpenAction = (request) => async (dispatch) => {
+export const isDialogOpenAction = (request) => async (dispatch) => {
   dispatch(isAddTransactionDialogOpen(request));
 };
 
-export const addTransactionFormDataAction = (request) => async (dispatch) => {
+export const formDataAction = (request) => async (dispatch) => {
   dispatch(addTransactionFormData(request));
 };
 
-export const addTransactionInitialDataAction = () => async (dispatch) => {
+export const initialDataAction = () => async (dispatch) => {
   dispatch(addTransactionFormData(addTransactionInitialData));
 };
 
-export const isAddTransactionSubmitLoadingAction = (request) => async (dispatch) => {
+export const isSubmitLoadingAction = (request) => async (dispatch) => {
   dispatch(isAddTransactionSubmitLoading(request));
 };
 
 ///////////////////////// API ACTIONS /////////////////////////
-export const addTransactionAction = (request) => async (dispatch) => {
-  console.log('file: StocksActions.js ~ line 33 ~ addTransactionAction ~ request', request);
+export const formSubmitAction = (formData) => async (dispatch) => {
+  console.log('file: AddTransactionActions.js ~ line 37 ~ formSubmitAction ~ formData', formData);
+  const { data } = await api.addTransaction(formData);
+  console.log('data', data);
 };

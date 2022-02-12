@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+  //////////////////// ADD TRANSACTION INITIAL STATES ////////////////////
   isAddTransactionDialogOpen: false,
   addTransactionFormData: {
     depositoryName: '',
@@ -18,6 +19,7 @@ export const StocksSlice = createSlice({
   name: 'StocksSlice',
   initialState,
   reducers: {
+    //////////////////// ADD TRANSACTIONS REDUCERS ////////////////////
     isAddTransactionDialogOpen: (state, action) => {
       state.isAddTransactionDialogOpen = action.payload;
     },
