@@ -12,7 +12,10 @@ import DataGridColumns from './DataGridColumns';
 import AddTransactionDialog from './Add Transaction Dialog/AddTransactionDialog';
 
 // REDUX ACTIONS IMPORTS
-import { isAddTransactionDialogOpenAction } from '../../../Redux/Stocks Redux/StocksActions';
+import {
+  isAddTransactionDialogOpenAction,
+  addTransactionInitialDataAction,
+} from '../../../Redux/Stocks Redux/StocksActions';
 
 const StockDataGrid = () => {
   const dispatch = useDispatch();
@@ -21,7 +24,9 @@ const StockDataGrid = () => {
 
   const handleAddTransactionDialogOpen = () => {
     dispatch(isAddTransactionDialogOpenAction(true));
+    dispatch(addTransactionInitialDataAction());
   };
+
   return (
     <>
       <AddTransactionDialog />

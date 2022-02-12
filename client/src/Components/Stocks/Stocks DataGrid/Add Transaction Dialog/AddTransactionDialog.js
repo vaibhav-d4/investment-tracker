@@ -4,10 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 // MUI IMPORTS
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, Grid, Box, TextField } from '@mui/material';
-import {
-  LoadingButton,
-  // AdapterDateFns, LocalizationProvider, DatePicker
-} from '@mui/lab';
+import LoadingButton from '@mui/lab/LoadingButton';
 import DateAdapter from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
@@ -17,24 +14,43 @@ import useDialogStyles from '../../../../Common/Utils/Styles/DialogStyles';
 import InputFieldComponent from '../../../../Common/Utils/Component Utils/InputFieldComponent';
 
 // REDUX ACTIONS IMPORTS
-import { isAddTransactionDialogOpenAction } from '../../../../Redux/Stocks Redux/StocksActions';
+import {
+  isAddTransactionDialogOpenAction,
+  addTransactionFormDataAction,
+  addTransactionInitialDataAction,
+  isAddTransactionSubmitLoadingAction,
+  addTransactionAction,
+} from '../../../../Redux/Stocks Redux/StocksActions';
 
 const AddTransactionDialog = () => {
   const dialogClasses = useDialogStyles();
   const dispatch = useDispatch();
 
+  const todayDate = new Date();
+
   const isAddTransactionDialogOpen = useSelector((state) => state.stocks.isAddTransactionDialogOpen);
+  const addTransactionFormData = useSelector((state) => state.stocks.addTransactionFormData);
+  const isAddTransactionSubmitLoading = useSelector((state) => state.stocks.isAddTransactionSubmitLoading);
 
   const handleDialogClose = () => {
+    dispatch(addTransactionInitialDataAction());
     dispatch(isAddTransactionDialogOpenAction(false));
+    dispatch(isAddTransactionSubmitLoadingAction(false));
   };
 
   const handleInputDataChange = (e) => {
-    console.log(e.target.value);
+    dispatch(addTransactionFormDataAction({ ...addTransactionFormData, [e.target.name]: e.target.value }));
   };
 
   const handleDateChange = (newDateValue) => {
-    console.log(newDateValue);
+    dispatch(addTransactionFormDataAction({ ...addTransactionFormData, buyDate: JSON.stringify(newDateValue) }));
+  };
+
+  // MAIN ADD TRANSACTION FORM SUBMIT
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    dispatch(isAddTransactionSubmitLoadingAction(true));
+    dispatch(addTransactionAction(addTransactionFormData));
   };
 
   return (
@@ -47,6 +63,7 @@ const AddTransactionDialog = () => {
               <InputFieldComponent
                 name='depositoryName'
                 label='Depository Name'
+                value={addTransactionFormData.depositoryName}
                 handleChange={handleInputDataChange}
                 required
                 fullWidth
@@ -54,6 +71,7 @@ const AddTransactionDialog = () => {
               <InputFieldComponent
                 name='companyName'
                 label='Company Name'
+                value={addTransactionFormData.companyName}
                 handleChange={handleInputDataChange}
                 required
                 fullWidth
@@ -61,6 +79,7 @@ const AddTransactionDialog = () => {
               <InputFieldComponent
                 name='googleSymbol'
                 label='Google Symbol'
+                value={addTransactionFormData.googleSymbol}
                 handleChange={handleInputDataChange}
                 required
                 half
@@ -68,6 +87,7 @@ const AddTransactionDialog = () => {
               <InputFieldComponent
                 name='yahooSymbol'
                 label='Yahoo Symbol'
+                value={addTransactionFormData.yahooSymbol}
                 handleChange={handleInputDataChange}
                 required
                 half
@@ -77,7 +97,9 @@ const AddTransactionDialog = () => {
                 <LocalizationProvider dateAdapter={DateAdapter}>
                   <DatePicker
                     label='Buy Date'
-                    // value={}
+                    inputFormat='dd/MM/yyyy'
+                    maxDate={todayDate}
+                    value={JSON.parse(addTransactionFormData.buyDate)}
                     onChange={handleDateChange}
                     renderInput={(params) => <TextField required fullWidth {...params} />}
                   />
@@ -87,6 +109,7 @@ const AddTransactionDialog = () => {
               <InputFieldComponent
                 name='noOfShares'
                 label='Number of Shares'
+                value={addTransactionFormData.noOfShares}
                 handleChange={handleInputDataChange}
                 required
                 half
@@ -94,6 +117,7 @@ const AddTransactionDialog = () => {
               <InputFieldComponent
                 name='priceOfShareAtBuy'
                 label='Price of Share when Bought'
+                value={addTransactionFormData.priceOfShareAtBuy}
                 handleChange={handleInputDataChange}
                 required
                 half
@@ -105,7 +129,13 @@ const AddTransactionDialog = () => {
           <Button variant='text' color='primary' onClick={handleDialogClose}>
             Cancel
           </Button>
-          <LoadingButton loading={false} variant='text' color='primary'>
+          <LoadingButton
+            loading={isAddTransactionSubmitLoading}
+            variant='text'
+            color='primary'
+            type='submit'
+            onClick={handleFormSubmit}
+          >
             Submit
           </LoadingButton>
         </DialogActions>
