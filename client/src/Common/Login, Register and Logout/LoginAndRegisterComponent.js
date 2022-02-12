@@ -5,14 +5,13 @@ import { useNavigate } from 'react-router';
 
 // MUI IMPORTS
 import { Box, Container, Grid, Paper, Button, Typography, Alert } from '@mui/material';
-// import LoadingButton from '@mui/lab/LoadingButton';
 import { LoadingButton } from '@mui/lab';
 
 // COMPONENT IMPORTS
 import useAuthStyles from './AuthStyles';
 import useCommonStyles from '../Common Pages/CommonStyles';
-import { DrawerHeader } from '../Utils/LayoutUtils';
-import InputFieldComponent from '../Utils/InputFieldComponent';
+import { DrawerHeader } from '../Utils/MUI Utils/LayoutUtils';
+import InputFieldComponent from '../Utils/Component Utils/InputFieldComponent';
 import GoogleLoginComponent from './GoogleLoginComponent';
 import login from '../Images/login.png';
 

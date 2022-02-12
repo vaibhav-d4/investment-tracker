@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 
 // COMPONENT IMPORTS
 import RoutesComponent from './RoutesComponent';
-import LoginAndRegisterComponent from '../Login and Register/LoginAndRegisterComponent';
-import LogoutComponent from '../Login and Register/LogoutComponent';
+import LoginAndRegisterComponent from '../Login, Register and Logout/LoginAndRegisterComponent';
+import LogoutComponent from '../Login, Register and Logout/LogoutComponent';
 import UnauthorizedComponent from '../Common Pages/UnauthorizedComponent';
 import PageNotFoundComponent from '../Common Pages/PageNotFoundComponent';
 import HomeComponent from '../../Components/Home/HomeComponent';

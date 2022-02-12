@@ -52,9 +52,13 @@ export const register = async (req, res) => {
       imageUrl: '',
     });
 
-    const jwtToken = jwt.sign({ userId: userData._id, email: userData.email }, process.env.JWT_SECRET_KEY, {
-      expiresIn: '1h',
-    });
+    const jwtToken = jwt.sign(
+      { userId: userData._id, userName: userData.name, email: userData.email },
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: '1h',
+      }
+    );
 
     const dataToSend = constructDataObject(userData);
 
@@ -82,6 +86,7 @@ export const login = async (req, res) => {
     const jwtToken = jwt.sign(
       {
         id: existingUser._id,
+        userName: existingUser.name,
         email: existingUser.email,
       },
       process.env.JWT_SECRET_KEY,
@@ -124,9 +129,13 @@ export const googleLogin = async (req, res) => {
       });
     }
 
-    const jwtToken = jwt.sign({ id: userData._id, email: userData.email }, process.env.JWT_SECRET_KEY, {
-      expiresIn: '1h',
-    });
+    const jwtToken = jwt.sign(
+      { id: userData._id, userName: userData.name, email: userData.email },
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: '1h',
+      }
+    );
 
     const dataToSend = constructDataObject(userData);
 

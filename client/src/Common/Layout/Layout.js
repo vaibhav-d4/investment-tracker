@@ -42,7 +42,7 @@ import {
 
 // COMPONENTS IMPORTS
 import useStyles from './LayoutStyles';
-import { AppBar, Drawer, DrawerHeader, StyledBadge } from '../Utils/LayoutUtils';
+import { AppBar, Drawer, DrawerHeader, StyledBadge } from '../Utils/MUI Utils/LayoutUtils';
 import sideBarItemsList from './SideBarItems';
 
 const Layout = (props) => {
