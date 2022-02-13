@@ -4,6 +4,9 @@ import { isAddTransactionDialogOpen, addTransactionFormData, isAddTransactionSub
 // API IMPORTS
 import * as api from '../../API/apis.js';
 
+// OTHER IMPORTS
+import * as toast from '../../Common/Utils/Toastify/ToastifyUtil';
+
 // Initial Add Transaction Dialog Data
 const addTransactionInitialData = {
   depositoryName: '',
@@ -34,7 +37,16 @@ export const isSubmitLoadingAction = (request) => async (dispatch) => {
 
 ///////////////////////// API ACTIONS /////////////////////////
 export const formSubmitAction = (formData) => async (dispatch) => {
-  console.log('file: AddTransactionActions.js ~ line 37 ~ formSubmitAction ~ formData', formData);
-  const { data } = await api.addTransaction(formData);
-  console.log('data', data);
+  try {
+    const { data } = await api.addTransaction(formData);
+    setTimeout(function () {
+      toast.successToast(data?.message);
+      dispatch(isAddTransactionDialogOpen(false));
+      dispatch(isAddTransactionSubmitLoading(false));
+    }, 2000);
+  } catch (error) {
+    toast.errorToast(error?.response?.data?.error);
+    dispatch(addTransactionFormData(addTransactionInitialData));
+    dispatch(isAddTransactionSubmitLoading(false));
+  }
 };

@@ -19,7 +19,7 @@ const ValidateToken = async (req, res, next) => {
 
     next();
   } catch (error) {
-    res.status(400).json({ message: 'Authorization Failed' });
+    res.status(401).json({ message: 'Authorization Failed' });
   }
 };
 

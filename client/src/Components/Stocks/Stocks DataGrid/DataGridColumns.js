@@ -114,10 +114,18 @@ const DataGridColumns = [
     hide: false,
   },
   {
+    field: 'rateOfReturn',
+    headerName: 'Rate of Return',
+    headerAlign: 'center',
+    description: 'Simple Rate of Return (ROR).',
+    width: 150,
+    hide: false,
+  },
+  {
     field: 'RORAnnualized',
     headerName: 'ROR Annuaized',
     headerAlign: 'center',
-    description: 'Annualized Rate of Return',
+    description: 'Annualized Rate of Return (CAGR).',
     width: 150,
     hide: false,
   },
@@ -139,7 +147,7 @@ const DataGridColumns = [
   },
   {
     field: 'priceChangeTotalShares',
-    headerName: 'Price Change for Each',
+    headerName: 'Price Change for Total',
     headerAlign: 'center',
     description: 'The change of price for total shares since yesterday.',
     width: 150,

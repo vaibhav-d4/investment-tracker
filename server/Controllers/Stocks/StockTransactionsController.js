@@ -17,11 +17,14 @@ export const getTransactions = async (req, res) => {
 export const addTransaction = async (req, res) => {
   try {
     const { userId, userName, userEmail } = req;
+
     const transactionData = await addTransactionDataObject(userId, userName, userEmail, req.body);
-    await StockTransactionsCollection.create(transactionData);
-    res.status(202).json({ message: 'Transaction Added Successfully.' });
+    const addedTransactionData = await StockTransactionsCollection.create(transactionData);
+
+    if (addedTransactionData) res.status(202).json({ message: 'Transaction Added Successfully.' });
+    else res.status(400).json({ error: 'Unexpected error. Please try again.' });
   } catch (error) {
     console.log(error);
-    res.status(400).json({ message: 'Error occured. Please try again.' });
+    res.status(400).json({ error: 'Error occured. Please try again.' });
   }
 };
