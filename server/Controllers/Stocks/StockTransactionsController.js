@@ -10,7 +10,18 @@ dotenv.config({ path: './Env/.env' });
 //////////////////////// APIS ////////////////////////////////
 // GET TABLE DATA
 export const getTransactions = async (req, res) => {
-  res.status(200).json({ message: 'Inside getTransactions' });
+  try {
+    const { userId } = req;
+
+    const userTransactions = await StockTransactionsCollection.find({ userId });
+
+    if (userTransactions)
+      res.status(200).json({ transactionDetails: userTransactions, message: 'Data fetched successfully.' });
+    else res.status(400).json({ error: 'Error. Please try again.' });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: 'Error occured. Please try again.' });
+  }
 };
 
 // INSERT DATA IN TABLE
@@ -22,7 +33,7 @@ export const addTransaction = async (req, res) => {
     const addedTransactionData = await StockTransactionsCollection.create(transactionData);
 
     if (addedTransactionData) res.status(202).json({ message: 'Transaction Added Successfully.' });
-    else res.status(400).json({ error: 'Unexpected error. Please try again.' });
+    else res.status(400).json({ error: 'Error. Please try again.' });
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: 'Error occured. Please try again.' });

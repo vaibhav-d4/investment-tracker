@@ -1,6 +1,6 @@
 const DataGridColumns = [
   {
-    field: 'transactionId',
+    field: 'id',
     headerName: 'Transaction ID',
     headerAlign: 'center',
     description: 'Unique Transaction ID for this transaction.',
@@ -123,7 +123,7 @@ const DataGridColumns = [
   },
   {
     field: 'RORAnnualized',
-    headerName: 'ROR Annuaized',
+    headerName: 'ROR Annualized',
     headerAlign: 'center',
     description: 'Annualized Rate of Return (CAGR).',
     width: 150,
@@ -154,7 +154,7 @@ const DataGridColumns = [
     hide: false,
   },
   {
-    field: 'lastUpdated',
+    field: 'lastUpdatedTS',
     headerName: 'Last Updated On',
     headerAlign: 'center',
     description: 'Last Update Status',

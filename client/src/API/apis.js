@@ -21,4 +21,5 @@ export const register = (formData) => API.post('/user/register', formData);
 export const googleLogin = (userData) => API.post('/user/googlelogin', userData);
 
 // STOCKS APIS
+export const getTransactions = () => API.get('/stocks/getTransactions');
 export const addTransaction = (formData) => API.post('/stocks/addTransaction', formData);

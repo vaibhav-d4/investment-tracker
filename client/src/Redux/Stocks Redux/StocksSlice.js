@@ -13,6 +13,9 @@ const initialState = {
     priceOfShareAtBuy: '',
   },
   isAddTransactionSubmitLoading: false,
+  //////////////////// STOCKS DATAGRID INITIAL STATES ////////////////////
+  isTableLoading: false,
+  tableData: [],
 };
 
 export const StocksSlice = createSlice({
@@ -29,10 +32,21 @@ export const StocksSlice = createSlice({
     isAddTransactionSubmitLoading: (state, action) => {
       state.isAddTransactionSubmitLoading = action.payload;
     },
+    isTableLoading: (state, action) => {
+      state.isTableLoading = action.payload;
+    },
+    tableData: (state, action) => {
+      state.tableData = action.payload;
+    },
   },
 });
 
-export const { isAddTransactionDialogOpen, addTransactionFormData, isAddTransactionSubmitLoading } =
-  StocksSlice.actions;
+export const {
+  isAddTransactionDialogOpen,
+  addTransactionFormData,
+  isAddTransactionSubmitLoading,
+  isTableLoading,
+  tableData,
+} = StocksSlice.actions;
 
 export default StocksSlice.reducer;

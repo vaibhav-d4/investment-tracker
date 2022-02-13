@@ -15,7 +15,7 @@ router.get('/', function (req, res) {
 });
 
 // GET TRANSACTIONS API - http://localhost:PORT/stocks/getTransactions
-router.get('/getTransactions', getTransactions);
+router.get('/getTransactions', ValidateToken, getTransactions);
 
 // INSERT TRANSACTION API - http://localhost:PORT/stocks/addTransaction
 router.post('/addTransaction', ValidateToken, addTransaction);

@@ -1,6 +1,6 @@
 // REACT IMPORTS
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 // MUI IMPORTS
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
@@ -13,6 +13,7 @@ import AddTransactionDialog from './Add Transaction Dialog/AddTransactionDialog'
 
 // REDUX ACTIONS IMPORTS
 import { isDialogOpenAction, initialDataAction } from '../../../Redux/Stocks Redux/AddTransactionActions';
+import { isTableLoadingAction, getTableDataAction } from '../../../Redux/Stocks Redux/StocksActions';
 
 // OTHER IMPORTS
 // import * as toast from '../../../Common/Utils/Toastify/ToastifyUtil';
@@ -20,7 +21,13 @@ import { isDialogOpenAction, initialDataAction } from '../../../Redux/Stocks Red
 const StockDataGrid = () => {
   const dispatch = useDispatch();
 
-  const rows = [];
+  const tableData = useSelector((state) => state.stocks.tableData);
+  const isTableLoading = useSelector((state) => state.stocks.isTableLoading);
+
+  useEffect(() => {
+    dispatch(isTableLoadingAction(true));
+    dispatch(getTableDataAction());
+  }, [dispatch]);
 
   const handleAddTransactionDialogOpen = () => {
     dispatch(isDialogOpenAction(true));
@@ -42,11 +49,11 @@ const StockDataGrid = () => {
         <div style={{ display: 'flex', height: '100%' }}>
           <div style={{ flexGrow: 1 }}>
             <DataGrid
-              rows={rows}
+              rows={tableData}
               columns={DataGridColumns}
               autoPageSize
               density='compact'
-              loading={false}
+              loading={isTableLoading}
               components={{
                 Toolbar: GridToolbar,
                 NoRowsOverlay: DataGridNoRowsOverlayUtil,
