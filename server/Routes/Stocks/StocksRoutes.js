@@ -2,7 +2,10 @@
 import express from 'express';
 
 // FUNCTIONS IMPORTS
-import { getTransactions, insertTransaction } from '../../Controllers/Stocks/StockTransactionsController.js';
+import { getTransactions, addTransaction } from '../../Controllers/Stocks/StockTransactionsController.js';
+
+// MIDDLEWARE IMPORTS
+import ValidateToken from '../../Middleware/ValidateToken.js';
 
 const router = express.Router();
 
@@ -14,7 +17,7 @@ router.get('/', function (req, res) {
 // GET TRANSACTIONS API - http://localhost:PORT/stocks/getTransactions
 router.get('/getTransactions', getTransactions);
 
-// INSERT TRANSACTION API - http://localhost:PORT/stocks/insertTransaction
-router.post('/insertTransaction', insertTransaction);
+// INSERT TRANSACTION API - http://localhost:PORT/stocks/addTransaction
+router.post('/addTransaction', ValidateToken, addTransaction);
 
 export default router;

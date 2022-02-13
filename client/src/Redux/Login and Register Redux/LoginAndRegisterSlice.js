@@ -45,9 +45,9 @@ export const LoginAndRegisterSlice = createSlice({
       const setLocalStorageData = {
         userInfo: {
           userId: receivedData.userData._id,
-          name: receivedData.userData.name,
-          email: receivedData.userData.email,
-          imageUrl: receivedData.userData.imageUrl,
+          userName: receivedData.userData.name,
+          userEmail: receivedData.userData.email,
+          userImageUrl: receivedData.userData.imageUrl,
         },
         jwtToken: receivedData.jwtToken,
       };

@@ -53,7 +53,7 @@ export const register = async (req, res) => {
     });
 
     const jwtToken = jwt.sign(
-      { userId: userData._id, userName: userData.name, email: userData.email },
+      { userId: userData._id, userName: userData.name, userEmail: userData.email },
       process.env.JWT_SECRET_KEY,
       {
         expiresIn: '1h',
@@ -85,9 +85,9 @@ export const login = async (req, res) => {
 
     const jwtToken = jwt.sign(
       {
-        id: existingUser._id,
+        userId: existingUser._id,
         userName: existingUser.name,
-        email: existingUser.email,
+        userEmail: existingUser.email,
       },
       process.env.JWT_SECRET_KEY,
       { expiresIn: '1h' }
@@ -130,7 +130,7 @@ export const googleLogin = async (req, res) => {
     }
 
     const jwtToken = jwt.sign(
-      { id: userData._id, userName: userData.name, email: userData.email },
+      { userId: userData._id, userName: userData.name, userEmail: userData.email },
       process.env.JWT_SECRET_KEY,
       {
         expiresIn: '1h',

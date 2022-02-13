@@ -8,7 +8,7 @@ import * as api from '../../API/apis.js';
 const addTransactionInitialData = {
   depositoryName: '',
   companyName: '',
-  googleSymbol: '',
+  // googleSymbol: '',
   yahooSymbol: '',
   buyDate: null,
   noOfShares: '',

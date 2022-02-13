@@ -6,7 +6,7 @@ const initialState = {
   addTransactionFormData: {
     depositoryName: '',
     companyName: '',
-    googleSymbol: '',
+    // googleSymbol: '',
     yahooSymbol: '',
     buyDate: null,
     noOfShares: '',

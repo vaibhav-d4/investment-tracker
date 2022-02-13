@@ -33,14 +33,14 @@ const DataGridColumns = [
     width: 150,
     hide: false,
   },
-  {
-    field: 'googleSymbol',
-    headerName: 'Google Symbol',
-    headerAlign: 'center',
-    description: 'Google Symbol for the Comapny.',
-    width: 150,
-    hide: true,
-  },
+  // {
+  //   field: 'googleSymbol',
+  //   headerName: 'Google Symbol',
+  //   headerAlign: 'center',
+  //   description: 'Google Symbol for the Comapny.',
+  //   width: 150,
+  //   hide: true,
+  // },
   {
     field: 'yahooSymbol',
     headerName: 'Yahoo Symbol',

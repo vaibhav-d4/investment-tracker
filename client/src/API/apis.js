@@ -10,7 +10,7 @@ const API = axios.create({
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('user')) {
     const jwtToken = JSON.parse(localStorage.getItem('user')).jwtToken;
-    req.headers.Authorization = `Bearer ${jwtToken}`;
+    req.headers.authorization = `Bearer ${jwtToken}`;
   }
   return req;
 });

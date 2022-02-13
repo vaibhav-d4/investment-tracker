@@ -1,9 +1,9 @@
 // SERVER IMPORTS
-import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
 // FUNCTION IMPORTS
 import StockTransactionsCollection from '../../Models/Stocks/StockTransactionsModel.js';
+import { addTransactionDataObject } from './StockFunctionsUtil.js';
 
 dotenv.config({ path: './Env/.env' });
 
@@ -14,13 +14,14 @@ export const getTransactions = async (req, res) => {
 };
 
 // INSERT DATA IN TABLE
-export const insertTransaction = async (req, res) => {
-  const { name } = req.body;
+export const addTransaction = async (req, res) => {
   try {
-    const trxnDetail = await StockTransactionsCollection.create({ name });
-    res.status(200).json({ message: 'Inside insertTransaction' });
+    const { userId, userName, userEmail } = req;
+    const transactionData = await addTransactionDataObject(userId, userName, userEmail, req.body);
+    await StockTransactionsCollection.create(transactionData);
+    res.status(202).json({ message: 'Transaction Added Successfully.' });
   } catch (error) {
     console.log(error);
-    res.status(400).json({ message: 'Error Occured' });
+    res.status(400).json({ message: 'Error occured. Please try again.' });
   }
 };

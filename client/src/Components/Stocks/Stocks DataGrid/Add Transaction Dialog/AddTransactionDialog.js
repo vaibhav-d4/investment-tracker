@@ -75,10 +75,9 @@ const AddTransactionDialog = () => {
                 type='text'
                 value={addTransactionFormData.companyName}
                 handleChange={handleInputDataChange}
-                required
                 fullWidth
               />
-              <InputFieldComponent
+              {/* <InputFieldComponent
                 name='googleSymbol'
                 label='Google Symbol'
                 type='text'
@@ -86,7 +85,7 @@ const AddTransactionDialog = () => {
                 handleChange={handleInputDataChange}
                 required
                 half
-              />
+              /> */}
               <InputFieldComponent
                 name='yahooSymbol'
                 label='Yahoo Symbol'
@@ -96,7 +95,6 @@ const AddTransactionDialog = () => {
                 required
                 half
               />
-              <Grid item xs={12} sm={3} /> {/* EMPTY GRID ITEM */}
               <Grid item xs={12} sm={6}>
                 <LocalizationProvider dateAdapter={DateAdapter}>
                   <DatePicker
@@ -109,7 +107,6 @@ const AddTransactionDialog = () => {
                   />
                 </LocalizationProvider>
               </Grid>
-              <Grid item xs={12} sm={3} /> {/* EMPTY GRID ITEM */}
               <InputFieldComponent
                 name='noOfShares'
                 label='Number of Shares'
