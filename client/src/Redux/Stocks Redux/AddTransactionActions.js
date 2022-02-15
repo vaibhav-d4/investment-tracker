@@ -1,5 +1,10 @@
 // SLICE IMPORTS
-import { isAddTransactionDialogOpen, addTransactionFormData, isAddTransactionSubmitLoading } from './StocksSlice';
+import {
+  isAddTransactionDialogOpen,
+  addTransactionFormData,
+  isAddTransactionSubmitLoading,
+  isYahooURLError,
+} from './StocksSlice';
 
 // API IMPORTS
 import * as api from '../../API/apis.js';
@@ -10,9 +15,10 @@ import * as toast from '../../Common/Utils/Toastify/ToastifyUtil';
 // Initial Add Transaction Dialog Data
 const addTransactionInitialData = {
   depositoryName: '',
-  companyName: '',
+  // companyName: '',
   // googleSymbol: '',
-  yahooSymbol: '',
+  // yahooSymbol: '',
+  yahooSymbolURL: '',
   buyDate: null,
   noOfShares: '',
   priceOfShareAtBuy: '',
@@ -35,17 +41,36 @@ export const isSubmitLoadingAction = (request) => async (dispatch) => {
   dispatch(isAddTransactionSubmitLoading(request));
 };
 
+export const isYahooURLErrorAction = (request) => async (dispatch) => {
+  dispatch(isYahooURLError(request));
+};
+
+const startsWith = (str, word) => {
+  return str.lastIndexOf(word, 0) === 0;
+};
+
 ///////////////////////// API ACTIONS /////////////////////////
 export const formSubmitAction = (formData) => async (dispatch) => {
+  console.log('file: AddTransactionActions.js ~ line 54 ~ formSubmitAction ~ formData', formData);
+  dispatch(isAddTransactionSubmitLoading(true));
+
+  const isYahooError = startsWith(formData.yahooSymbolURL, 'https://finance.yahoo.com/quote');
+
   try {
-    const { data } = await api.addTransaction(formData);
-    setTimeout(() => {
-      toast.successToast(data?.message);
-      dispatch(isAddTransactionDialogOpen(false));
+    if (!isYahooError) {
+      dispatch(isYahooURLError(true));
       dispatch(isAddTransactionSubmitLoading(false));
-    }, 2000);
+    } else {
+      dispatch(isYahooURLError(false));
+      const { data } = await api.addTransaction(formData);
+      setTimeout(() => {
+        toast.successToast(data?.message);
+        dispatch(isAddTransactionDialogOpen(false));
+        dispatch(isAddTransactionSubmitLoading(false));
+      }, 2000);
+    }
   } catch (error) {
-    toast.errorToast(error?.response?.data?.error);
+    toast.errorToast(error?.response?.data?.error || 'Unexpected Error.');
     dispatch(addTransactionFormData(addTransactionInitialData));
     dispatch(isAddTransactionSubmitLoading(false));
   }

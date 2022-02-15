@@ -5,7 +5,8 @@ import * as formulajs from '@formulajs/formulajs';
 // To create the data object for addTransaction API
 export const addTransactionDataObject = async (userId, userName, userEmail, requestBody) => {
   try {
-    const { depositoryName, yahooSymbol, buyDate, noOfShares, priceOfShareAtBuy } = requestBody;
+    const { depositoryName, yahooSymbolURL, buyDate, noOfShares, priceOfShareAtBuy } = requestBody;
+    const yahooSymbol = await getYahooSymbolFromURL(yahooSymbolURL);
     const symbolData = await getYahooSymbolData(yahooSymbol);
 
     // to Set all the columns values in Add Transaction Data Object
@@ -48,8 +49,9 @@ export const addTransactionDataObject = async (userId, userName, userEmail, requ
       priceChangeTotalShares,
       lastUpdatedTS,
     };
+    console.log('file: StockFunctionsUtil.js ~ line 53 ~ addTransactionDataObject ~ dataObject', dataObject);
 
-    return dataObject;
+    // return dataObject;
   } catch (error) {
     console.log('file: StockFunctionsUtil.js ~ addTransactionDataObject ~ error', error);
   }

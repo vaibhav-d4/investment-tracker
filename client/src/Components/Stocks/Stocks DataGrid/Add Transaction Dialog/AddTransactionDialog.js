@@ -20,6 +20,7 @@ import {
   initialDataAction,
   isSubmitLoadingAction,
   formSubmitAction,
+  isYahooURLErrorAction,
 } from '../../../../Redux/Stocks Redux/AddTransactionActions';
 
 const AddTransactionDialog = () => {
@@ -31,6 +32,7 @@ const AddTransactionDialog = () => {
   const isAddTransactionDialogOpen = useSelector((state) => state.stocks.isAddTransactionDialogOpen);
   const addTransactionFormData = useSelector((state) => state.stocks.addTransactionFormData);
   const isAddTransactionSubmitLoading = useSelector((state) => state.stocks.isAddTransactionSubmitLoading);
+  const isYahooURLError = useSelector((state) => state.stocks.isYahooURLError);
 
   const handleDialogClose = () => {
     dispatch(initialDataAction());
@@ -39,6 +41,9 @@ const AddTransactionDialog = () => {
   };
 
   const handleInputDataChange = (e) => {
+    if (e.target.name === 'yahooSymbolURL') {
+      dispatch(isYahooURLErrorAction(false));
+    }
     dispatch(formDataAction({ ...addTransactionFormData, [e.target.name]: e.target.value }));
   };
 
@@ -49,7 +54,6 @@ const AddTransactionDialog = () => {
   // MAIN ADD TRANSACTION FORM SUBMIT
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    dispatch(isSubmitLoadingAction(true));
     dispatch(formSubmitAction(addTransactionFormData));
   };
 
@@ -69,14 +73,14 @@ const AddTransactionDialog = () => {
                 required
                 fullWidth
               />
-              <InputFieldComponent
+              {/* <InputFieldComponent
                 name='companyName'
                 label='Company Name'
                 type='text'
                 value={addTransactionFormData.companyName}
                 handleChange={handleInputDataChange}
                 fullWidth
-              />
+              /> */}
               {/* <InputFieldComponent
                 name='googleSymbol'
                 label='Google Symbol'
@@ -87,14 +91,25 @@ const AddTransactionDialog = () => {
                 half
               /> */}
               <InputFieldComponent
+                name='yahooSymbolURL'
+                label='Yahoo Finance URL for Stock'
+                type='text'
+                value={addTransactionFormData.yahooSymbolURL}
+                handleChange={handleInputDataChange}
+                error={isYahooURLError}
+                helperText={isYahooURLError ? 'Incorrect Yahoo Finance URL.' : ''}
+                fullWidth
+                required
+              />
+              {/* <InputFieldComponent
                 name='yahooSymbol'
                 label='Yahoo Symbol'
                 type='text'
                 value={addTransactionFormData.yahooSymbol}
                 handleChange={handleInputDataChange}
-                required
                 half
-              />
+              /> */}
+              <Grid item xs={12} sm={3} />
               <Grid item xs={12} sm={6}>
                 <LocalizationProvider dateAdapter={DateAdapter}>
                   <DatePicker
@@ -107,6 +122,7 @@ const AddTransactionDialog = () => {
                   />
                 </LocalizationProvider>
               </Grid>
+              <Grid item xs={12} sm={3} />
               <InputFieldComponent
                 name='noOfShares'
                 label='Number of Shares'

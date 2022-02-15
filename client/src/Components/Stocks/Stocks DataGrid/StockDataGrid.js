@@ -12,7 +12,11 @@ import DataGridColumns from './DataGridColumns';
 import AddTransactionDialog from './Add Transaction Dialog/AddTransactionDialog';
 
 // REDUX ACTIONS IMPORTS
-import { isDialogOpenAction, initialDataAction } from '../../../Redux/Stocks Redux/AddTransactionActions';
+import {
+  isDialogOpenAction,
+  initialDataAction,
+  isYahooURLErrorAction,
+} from '../../../Redux/Stocks Redux/AddTransactionActions';
 import { isTableLoadingAction, getTableDataAction, updateTableAction } from '../../../Redux/Stocks Redux/StocksActions';
 
 // OTHER IMPORTS
@@ -36,6 +40,7 @@ const StockDataGrid = () => {
 
   const handleAddTransactionDialogOpen = () => {
     dispatch(isDialogOpenAction(true));
+    dispatch(isYahooURLErrorAction(false));
     dispatch(initialDataAction());
   };
 

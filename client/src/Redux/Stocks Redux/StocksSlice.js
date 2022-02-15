@@ -5,14 +5,16 @@ const initialState = {
   isAddTransactionDialogOpen: false,
   addTransactionFormData: {
     depositoryName: '',
-    companyName: '',
+    // companyName: '',
     // googleSymbol: '',
-    yahooSymbol: '',
+    // yahooSymbol: '',
+    yahooSymbolURL: '',
     buyDate: null,
     noOfShares: '',
     priceOfShareAtBuy: '',
   },
   isAddTransactionSubmitLoading: false,
+  isYahooURLError: false,
   //////////////////// STOCKS DATAGRID INITIAL STATES ////////////////////
   isTableLoading: false,
   tableData: [],
@@ -32,6 +34,10 @@ export const StocksSlice = createSlice({
     isAddTransactionSubmitLoading: (state, action) => {
       state.isAddTransactionSubmitLoading = action.payload;
     },
+    isYahooURLError: (state, action) => {
+      state.isYahooURLError = action.payload;
+    },
+    //////////////////// DATAGRID REDUCERS ////////////////////
     isTableLoading: (state, action) => {
       state.isTableLoading = action.payload;
     },
@@ -45,6 +51,7 @@ export const {
   isAddTransactionDialogOpen,
   addTransactionFormData,
   isAddTransactionSubmitLoading,
+  isYahooURLError,
   isTableLoading,
   tableData,
 } = StocksSlice.actions;

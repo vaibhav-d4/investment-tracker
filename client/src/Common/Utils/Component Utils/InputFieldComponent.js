@@ -18,6 +18,8 @@ const InputFieldComponent = ({
   required,
   handleShowPassword,
   value,
+  error,
+  helperText,
 }) => {
   return (
     <Grid item xs={12} sm={half ? 6 : 12}>
@@ -31,6 +33,8 @@ const InputFieldComponent = ({
         autoFocus={autoFocus}
         type={type}
         value={value}
+        error={error}
+        helperText={helperText}
         InputProps={
           name === 'password'
             ? {
