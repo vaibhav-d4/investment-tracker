@@ -54,7 +54,7 @@ export const updateTransactions = async (req, res) => {
     });
     const finalUpdated = await Promise.all(dataObject);
 
-    if (finalUpdated) res.status(200).json({ transactionDetails: finalUpdated, message: 'Data fetched successfully.' });
+    if (finalUpdated) res.status(200).json({ transactionDetails: finalUpdated, message: 'Data updated successfully.' });
     else res.status(400).json({ error: 'Error. Please try again.' });
   } catch (error) {
     console.log(error);

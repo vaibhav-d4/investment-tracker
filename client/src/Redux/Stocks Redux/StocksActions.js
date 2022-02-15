@@ -1,5 +1,5 @@
 // SLICE IMPORTS
-import { isTableLoading, tableData } from './StocksSlice';
+import { isTableLoading, tableData, isUpdateBtnLoading } from './StocksSlice';
 
 // API IMPORTS
 import * as api from '../../API/apis.js';
@@ -21,9 +21,16 @@ export const getTableDataAction = () => async (dispatch) => {
 };
 
 export const updateTableAction = () => async (dispatch) => {
+  dispatch(isUpdateBtnLoading(true));
   try {
     const { data } = await api.updateTransactions();
-    console.log('file: StocksActions.js ~ line 25 ~ updateTableAction ~ data', data);
+    const createdTableData = await createTableData(data?.transactionDetails);
+    setTimeout(() => {
+      dispatch(isUpdateBtnLoading(false));
+      dispatch(tableData(createdTableData));
+      dispatch(isTableLoading(false));
+      toast.successToast(data?.message);
+    }, 1000);
   } catch (error) {
     toast.errorToast(error?.response?.data?.error);
     dispatch(isTableLoading(false));
@@ -33,6 +40,10 @@ export const updateTableAction = () => async (dispatch) => {
 ///////////////////////// COMMON ACTIONS /////////////////////////
 export const isTableLoadingAction = (request) => async (dispatch) => {
   dispatch(isTableLoading(request));
+};
+
+export const isUpdateBtnLoadingAction = (request) => async (dispatch) => {
+  dispatch(isUpdateBtnLoading(request));
 };
 
 ///////////////////////// COMMON FUNCTIONS /////////////////////////

@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // MUI IMPORTS
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { Button, Stack } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 // COMPONENTS IMPORTS
 import DataGridNoRowsOverlayUtil from '../../../Common/Utils/MUI Utils/DataGridNoRowsOverlayUtil';
@@ -17,7 +18,12 @@ import {
   initialDataAction,
   isYahooURLErrorAction,
 } from '../../../Redux/Stocks Redux/AddTransactionActions';
-import { isTableLoadingAction, getTableDataAction, updateTableAction } from '../../../Redux/Stocks Redux/StocksActions';
+import {
+  isTableLoadingAction,
+  getTableDataAction,
+  updateTableAction,
+  isUpdateBtnLoadingAction,
+} from '../../../Redux/Stocks Redux/StocksActions';
 
 // OTHER IMPORTS
 // import * as toast from '../../../Common/Utils/Toastify/ToastifyUtil';
@@ -27,10 +33,12 @@ const StockDataGrid = () => {
 
   const tableData = useSelector((state) => state.stocks.tableData);
   const isTableLoading = useSelector((state) => state.stocks.isTableLoading);
+  const isUpdateBtnLoading = useSelector((state) => state.stocks.isUpdateBtnLoading);
 
   useEffect(() => {
     dispatch(isTableLoadingAction(true));
     dispatch(getTableDataAction());
+    dispatch(isUpdateBtnLoadingAction(false));
   }, [dispatch]);
 
   const handleTableUpdate = () => {
@@ -48,14 +56,15 @@ const StockDataGrid = () => {
     <>
       <AddTransactionDialog />
       <Stack sx={{ mt: -2, mb: 1 }} direction='row' alignItems='flex-start' justifyContent='flex-end' spacing={2}>
-        <Button
+        <LoadingButton
           size='small'
           variant='contained'
+          loading={isUpdateBtnLoading}
           disabled={tableData.length > 0 ? false : true}
           onClick={handleTableUpdate}
         >
           Update
-        </Button>
+        </LoadingButton>
         <Button size='small' variant='contained' onClick={handleAddTransactionDialogOpen}>
           Add Transaction
         </Button>

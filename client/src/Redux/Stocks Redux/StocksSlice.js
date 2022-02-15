@@ -18,6 +18,7 @@ const initialState = {
   //////////////////// STOCKS DATAGRID INITIAL STATES ////////////////////
   isTableLoading: false,
   tableData: [],
+  isUpdateBtnLoading: false,
 };
 
 export const StocksSlice = createSlice({
@@ -44,6 +45,9 @@ export const StocksSlice = createSlice({
     tableData: (state, action) => {
       state.tableData = action.payload;
     },
+    isUpdateBtnLoading: (state, action) => {
+      state.isUpdateBtnLoading = action.payload;
+    },
   },
 });
 
@@ -54,6 +58,7 @@ export const {
   isYahooURLError,
   isTableLoading,
   tableData,
+  isUpdateBtnLoading,
 } = StocksSlice.actions;
 
 export default StocksSlice.reducer;

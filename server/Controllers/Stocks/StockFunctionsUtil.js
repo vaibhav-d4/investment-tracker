@@ -74,7 +74,8 @@ export const updateUserTransactions = async (userTransactions) => {
       const priceChangePerShare = await getPriceChangePerShare(symbolData);
       const percentageChangePerShare = await getPercentageChangePerShare(symbolData);
       const priceChangeTotalShares = await getPriceChangeTotalShares(item.noOfShares, priceChangePerShare);
-      const lastUpdatedTS = await getLastUpdated();
+      const lastUpdatedTS = await getLastUpdatedForUser();
+      const lastUpdatedTSForDB = await getLastUpdatedForDB();
 
       return {
         ...item._doc,
@@ -88,6 +89,7 @@ export const updateUserTransactions = async (userTransactions) => {
         percentageChangePerShare,
         priceChangeTotalShares,
         lastUpdatedTS,
+        lastUpdatedTSForDB,
       };
     });
     const updatedTransactions = await Promise.all(dataObject);

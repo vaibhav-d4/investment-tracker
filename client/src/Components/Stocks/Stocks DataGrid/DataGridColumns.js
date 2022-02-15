@@ -76,7 +76,7 @@ const DataGridColumns = [
     headerAlign: 'center',
     description: 'Date on which you have purchased the Shares.',
     align: 'center',
-    width: 100,
+    width: 120,
     hide: false,
   },
   {
