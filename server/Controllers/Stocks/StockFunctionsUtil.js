@@ -23,7 +23,8 @@ export const addTransactionDataObject = async (userId, userName, userEmail, requ
     const priceChangePerShare = await getPriceChangePerShare(symbolData);
     const percentageChangePerShare = await getPercentageChangePerShare(symbolData);
     const priceChangeTotalShares = await getPriceChangeTotalShares(noOfShares, priceChangePerShare);
-    const lastUpdatedTS = await getLastUpdated();
+    const lastUpdatedTS = await getLastUpdatedForUser();
+    const lastUpdatedTSForDB = await getLastUpdatedForDB();
 
     // Creating Add Transaction Data Model Object
     const dataObject = {
@@ -32,6 +33,7 @@ export const addTransactionDataObject = async (userId, userName, userEmail, requ
       userEmail,
       depositoryName,
       companyName,
+      yahooSymbolURL,
       yahooSymbol,
       buyDate: finalBuyDate,
       buyDateForDB,
@@ -48,10 +50,10 @@ export const addTransactionDataObject = async (userId, userName, userEmail, requ
       percentageChangePerShare,
       priceChangeTotalShares,
       lastUpdatedTS,
+      lastUpdatedTSForDB,
     };
-    console.log('file: StockFunctionsUtil.js ~ line 53 ~ addTransactionDataObject ~ dataObject', dataObject);
 
-    // return dataObject;
+    return dataObject;
   } catch (error) {
     console.log('file: StockFunctionsUtil.js ~ addTransactionDataObject ~ error', error);
   }
@@ -96,6 +98,13 @@ export const updateUserTransactions = async (userTransactions) => {
 };
 
 /////////////////// COMMON FUNCTIONS ///////////////////
+// Get Yahoo Symbol for URL
+export const getYahooSymbolFromURL = async (URL) => {
+  const urlParams = new URLSearchParams(URL.split('?')[1]);
+  const symbol = urlParams.get('p');
+  return symbol;
+};
+
 // Get Symbol Data for Yahoo Symbol
 export const getYahooSymbolData = async (yahooSymbol) => {
   const result = await yahooFinance.quote({
@@ -112,7 +121,28 @@ export const getCompanyName = async (symbolData) => {
 export const getUserBuyDate = async (buyDate) => {
   const invertedCommasRemovedBuyDate = buyDate.replaceAll(/['"]+/g, '');
   const tempBuyDate = new Date(invertedCommasRemovedBuyDate);
-  const finalBuyDate = `${tempBuyDate.getDate()}/${tempBuyDate.getMonth() + 1}/${tempBuyDate.getFullYear()}`;
+
+  const dateSuffix = (date) => {
+    if (date > 3 && date < 21) return 'th';
+    switch (date % 10) {
+      case 1:
+        return 'st';
+      case 2:
+        return 'nd';
+      case 3:
+        return 'rd';
+      default:
+        return 'th';
+    }
+  };
+
+  const date = tempBuyDate.getDate();
+  const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][
+    tempBuyDate.getMonth()
+  ];
+  const year = tempBuyDate.getFullYear();
+
+  const finalBuyDate = `${date}${dateSuffix(date)} ${month} ${year}`;
   return finalBuyDate;
 };
 
@@ -175,6 +205,10 @@ export const getPriceChangeTotalShares = async (noOfShares, priceChangePerShare)
   return (noOfShares * priceChangePerShare).toFixed(2);
 };
 
-export const getLastUpdated = async () => {
+export const getLastUpdatedForUser = async () => {
   return new Date().toLocaleString();
+};
+
+export const getLastUpdatedForDB = async () => {
+  return new Date();
 };
