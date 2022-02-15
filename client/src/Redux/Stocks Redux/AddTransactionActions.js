@@ -39,7 +39,7 @@ export const isSubmitLoadingAction = (request) => async (dispatch) => {
 export const formSubmitAction = (formData) => async (dispatch) => {
   try {
     const { data } = await api.addTransaction(formData);
-    setTimeout(function () {
+    setTimeout(() => {
       toast.successToast(data?.message);
       dispatch(isAddTransactionDialogOpen(false));
       dispatch(isAddTransactionSubmitLoading(false));

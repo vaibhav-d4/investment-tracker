@@ -26,7 +26,7 @@ const PathRoutes = () => {
     {
       exact: true,
       path: '/',
-      elememt: <Navigate to='/login' />,
+      element: <Navigate to='/login' />,
     },
 
     /////////////////// AUTH ROUTES ///////////////////

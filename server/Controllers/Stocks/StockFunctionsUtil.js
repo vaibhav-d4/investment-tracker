@@ -2,15 +2,6 @@
 import yahooFinance from 'yahoo-finance';
 import * as formulajs from '@formulajs/formulajs';
 
-// Get Symbol Data for Yahoo Symbol
-export const getYahooSymbolData = async (yahooSymbol) => {
-  const result = await yahooFinance.quote({
-    symbol: yahooSymbol,
-    modules: ['price', 'summaryDetail'],
-  });
-  return result;
-};
-
 // To create the data object for addTransaction API
 export const addTransactionDataObject = async (userId, userName, userEmail, requestBody) => {
   try {
@@ -19,7 +10,8 @@ export const addTransactionDataObject = async (userId, userName, userEmail, requ
 
     // to Set all the columns values in Add Transaction Data Object
     const companyName = await getCompanyName(symbolData);
-    const finalBuyDate = await getBuyDate(buyDate);
+    const finalBuyDate = await getUserBuyDate(buyDate);
+    const buyDateForDB = await getDBBuyDate(buyDate);
     const priceOfShareAtToday = await getPriceOfShareAtToday(symbolData);
     const totalInvestedAmount = await getTotalInvestmentAmount(noOfShares, priceOfShareAtBuy);
     const totalCurrentAmount = await getTotalCurrentAmount(noOfShares, priceOfShareAtToday);
@@ -41,6 +33,7 @@ export const addTransactionDataObject = async (userId, userName, userEmail, requ
       companyName,
       yahooSymbol,
       buyDate: finalBuyDate,
+      buyDateForDB,
       noOfShares,
       priceOfShareAtBuy,
       priceOfShareAtToday,
@@ -58,20 +51,72 @@ export const addTransactionDataObject = async (userId, userName, userEmail, requ
 
     return dataObject;
   } catch (error) {
-    console.log('error', error);
+    console.log('file: StockFunctionsUtil.js ~ addTransactionDataObject ~ error', error);
+  }
+};
+
+// Update User Transactions
+export const updateUserTransactions = async (userTransactions) => {
+  try {
+    const dataObject = await userTransactions.map(async (item) => {
+      const symbolData = await getYahooSymbolData(item.yahooSymbol);
+
+      const priceOfShareAtToday = await getPriceOfShareAtToday(symbolData);
+      const totalCurrentAmount = await getTotalCurrentAmount(item.noOfShares, priceOfShareAtToday);
+      const PNLTillDate = await getPNLTillDate(item.totalInvestedAmount, totalCurrentAmount);
+      const investedTerm = await getInvestedTerm(item.buyDateForDB);
+      const rateOfReturn = await getRateOfReturn(item.totalInvestedAmount, totalCurrentAmount);
+      const RORAnnualized = await getRORAnnualized(item.totalInvestedAmount, totalCurrentAmount, investedTerm);
+      const priceChangePerShare = await getPriceChangePerShare(symbolData);
+      const percentageChangePerShare = await getPercentageChangePerShare(symbolData);
+      const priceChangeTotalShares = await getPriceChangeTotalShares(item.noOfShares, priceChangePerShare);
+      const lastUpdatedTS = await getLastUpdated();
+
+      return {
+        ...item._doc,
+        priceOfShareAtToday,
+        totalCurrentAmount,
+        PNLTillDate,
+        investedTerm,
+        rateOfReturn,
+        RORAnnualized,
+        priceChangePerShare,
+        percentageChangePerShare,
+        priceChangeTotalShares,
+        lastUpdatedTS,
+      };
+    });
+    const updatedTransactions = await Promise.all(dataObject);
+    return updatedTransactions;
+  } catch (error) {
+    console.log('file: StockFunctionsUtil.js ~ updateUserTransactions ~ error', error);
   }
 };
 
 /////////////////// COMMON FUNCTIONS ///////////////////
+// Get Symbol Data for Yahoo Symbol
+export const getYahooSymbolData = async (yahooSymbol) => {
+  const result = await yahooFinance.quote({
+    symbol: yahooSymbol,
+    modules: ['price', 'summaryDetail'],
+  });
+  return result;
+};
+
 export const getCompanyName = async (symbolData) => {
   return symbolData?.price?.longName;
 };
 
-export const getBuyDate = async (buyDate) => {
+export const getUserBuyDate = async (buyDate) => {
   const invertedCommasRemovedBuyDate = buyDate.replaceAll(/['"]+/g, '');
   const tempBuyDate = new Date(invertedCommasRemovedBuyDate);
   const finalBuyDate = `${tempBuyDate.getDate()}/${tempBuyDate.getMonth() + 1}/${tempBuyDate.getFullYear()}`;
   return finalBuyDate;
+};
+
+export const getDBBuyDate = async (buyDate) => {
+  const dateForDB = buyDate.replaceAll(/['"]+/g, '');
+  return dateForDB;
 };
 
 export const getPriceOfShareAtToday = async (symbolData) => {

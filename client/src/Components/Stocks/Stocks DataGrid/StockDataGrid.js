@@ -13,7 +13,7 @@ import AddTransactionDialog from './Add Transaction Dialog/AddTransactionDialog'
 
 // REDUX ACTIONS IMPORTS
 import { isDialogOpenAction, initialDataAction } from '../../../Redux/Stocks Redux/AddTransactionActions';
-import { isTableLoadingAction, getTableDataAction } from '../../../Redux/Stocks Redux/StocksActions';
+import { isTableLoadingAction, getTableDataAction, updateTableAction } from '../../../Redux/Stocks Redux/StocksActions';
 
 // OTHER IMPORTS
 // import * as toast from '../../../Common/Utils/Toastify/ToastifyUtil';
@@ -29,6 +29,11 @@ const StockDataGrid = () => {
     dispatch(getTableDataAction());
   }, [dispatch]);
 
+  const handleTableUpdate = () => {
+    dispatch(isTableLoadingAction(true));
+    dispatch(updateTableAction());
+  };
+
   const handleAddTransactionDialogOpen = () => {
     dispatch(isDialogOpenAction(true));
     dispatch(initialDataAction());
@@ -38,7 +43,12 @@ const StockDataGrid = () => {
     <>
       <AddTransactionDialog />
       <Stack sx={{ mt: -2, mb: 1 }} direction='row' alignItems='flex-start' justifyContent='flex-end' spacing={2}>
-        <Button size='small' variant='contained' onClick={() => {}}>
+        <Button
+          size='small'
+          variant='contained'
+          disabled={tableData.length > 0 ? false : true}
+          onClick={handleTableUpdate}
+        >
           Update
         </Button>
         <Button size='small' variant='contained' onClick={handleAddTransactionDialogOpen}>
