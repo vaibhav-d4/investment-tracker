@@ -19,6 +19,8 @@ const initialState = {
   isTableLoading: false,
   tableData: [],
   isUpdateBtnLoading: false,
+  enableCheckBoxSelection: false,
+  selectedStocksTransactions: [],
 };
 
 export const StocksSlice = createSlice({
@@ -38,7 +40,7 @@ export const StocksSlice = createSlice({
     isYahooURLError: (state, action) => {
       state.isYahooURLError = action.payload;
     },
-    //////////////////// DATAGRID REDUCERS ////////////////////
+    //////////////////// STOCKS DATAGRID REDUCERS ////////////////////
     isTableLoading: (state, action) => {
       state.isTableLoading = action.payload;
     },
@@ -47,6 +49,12 @@ export const StocksSlice = createSlice({
     },
     isUpdateBtnLoading: (state, action) => {
       state.isUpdateBtnLoading = action.payload;
+    },
+    enableCheckBoxSelection: (state, action) => {
+      state.enableCheckBoxSelection = action.payload;
+    },
+    selectedStocksTransactions: (state, action) => {
+      state.selectedStocksTransactions = action.payload;
     },
   },
 });
@@ -59,6 +67,8 @@ export const {
   isTableLoading,
   tableData,
   isUpdateBtnLoading,
+  enableCheckBoxSelection,
+  selectedStocksTransactions,
 } = StocksSlice.actions;
 
 export default StocksSlice.reducer;

@@ -1,5 +1,11 @@
 // SLICE IMPORTS
-import { isTableLoading, tableData, isUpdateBtnLoading } from './StocksSlice';
+import {
+  isTableLoading,
+  tableData,
+  isUpdateBtnLoading,
+  selectedStocksTransactions,
+  enableCheckBoxSelection,
+} from './StocksSlice';
 
 // API IMPORTS
 import * as api from '../../API/apis.js';
@@ -9,6 +15,7 @@ import * as toast from '../../Common/Utils/Toastify/ToastifyUtil';
 
 ///////////////////////// API ACTIONS /////////////////////////
 export const getTableDataAction = () => async (dispatch) => {
+  dispatch(isTableLoading(true));
   try {
     const { data } = await api.getTransactions();
 
@@ -44,6 +51,14 @@ export const isTableLoadingAction = (request) => async (dispatch) => {
 
 export const isUpdateBtnLoadingAction = (request) => async (dispatch) => {
   dispatch(isUpdateBtnLoading(request));
+};
+
+export const selectedStocksTransactionsAction = (request) => async (dispatch) => {
+  dispatch(selectedStocksTransactions(request));
+};
+
+export const enableCheckBoxSelectionAction = (request) => async (dispatch) => {
+  dispatch(enableCheckBoxSelection(request));
 };
 
 ///////////////////////// COMMON FUNCTIONS /////////////////////////

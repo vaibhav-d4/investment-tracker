@@ -5,6 +5,7 @@ import {
   isAddTransactionSubmitLoading,
   isYahooURLError,
 } from './StocksSlice';
+import { getTableDataAction } from './StocksActions';
 
 // API IMPORTS
 import * as api from '../../API/apis.js';
@@ -51,7 +52,6 @@ const startsWith = (str, word) => {
 
 ///////////////////////// API ACTIONS /////////////////////////
 export const formSubmitAction = (formData) => async (dispatch) => {
-  console.log('file: AddTransactionActions.js ~ line 54 ~ formSubmitAction ~ formData', formData);
   dispatch(isAddTransactionSubmitLoading(true));
 
   const isYahooError = startsWith(formData.yahooSymbolURL, 'https://finance.yahoo.com/quote');
@@ -68,6 +68,7 @@ export const formSubmitAction = (formData) => async (dispatch) => {
         dispatch(isAddTransactionDialogOpen(false));
         dispatch(isAddTransactionSubmitLoading(false));
       }, 1000);
+      dispatch(getTableDataAction());
     }
   } catch (error) {
     toast.errorToast(error?.response?.data?.error || 'Unexpected Error.');
