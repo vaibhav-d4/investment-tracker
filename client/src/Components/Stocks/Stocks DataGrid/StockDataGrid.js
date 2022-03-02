@@ -8,7 +8,8 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 // COMPONENTS IMPORTS
 import DataGridNoRowsOverlayUtil from '../../../Common/Utils/MUI Utils/DataGridNoRowsOverlayUtil';
 import DataGridColumns from './DataGridColumns';
-import AddTransactionDialog from './Add Transaction Dialog/AddTransactionDialog';
+import AddTransactionDialog from './Stocks Dialogs/AddDialog';
+import DeleteDialog from './Stocks Dialogs/DeleteDialog';
 
 // REDUX ACTIONS IMPORTS
 import {
@@ -43,6 +44,7 @@ const StockDataGrid = () => {
   return (
     <>
       <AddTransactionDialog />
+      <DeleteDialog />
       <TransactionsStack />
       <div style={{ height: '70vh', width: '100%' }}>
         <div style={{ display: 'flex', height: '100%' }}>

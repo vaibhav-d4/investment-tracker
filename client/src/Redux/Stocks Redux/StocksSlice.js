@@ -15,6 +15,9 @@ const initialState = {
   },
   isAddTransactionSubmitLoading: false,
   isYahooURLError: false,
+  //////////////////// DELETE TRANSACTION INITIAL STATES ////////////////////
+  isDeleteDialogOpen: false,
+  deleteDialogData: [],
   //////////////////// STOCKS DATAGRID INITIAL STATES ////////////////////
   isTableLoading: false,
   tableData: [],
@@ -40,6 +43,13 @@ export const StocksSlice = createSlice({
     isYahooURLError: (state, action) => {
       state.isYahooURLError = action.payload;
     },
+    //////////////////// DELETE TRANSACTIONS REDUCERS ////////////////////
+    isDeleteDialogOpen: (state, action) => {
+      state.isDeleteDialogOpen = action.payload;
+    },
+    deleteDialogData: (state, action) => {
+      state.deleteDialogData = action.payload;
+    },
     //////////////////// STOCKS DATAGRID REDUCERS ////////////////////
     isTableLoading: (state, action) => {
       state.isTableLoading = action.payload;
@@ -64,6 +74,8 @@ export const {
   addTransactionFormData,
   isAddTransactionSubmitLoading,
   isYahooURLError,
+  isDeleteDialogOpen,
+  deleteDialogData,
   isTableLoading,
   tableData,
   isUpdateBtnLoading,

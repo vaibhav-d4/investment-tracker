@@ -13,6 +13,10 @@ import {
   isYahooURLErrorAction,
 } from '../../../../Redux/Stocks Redux/AddTransactionActions';
 import {
+  isDeleteDialogOpenAction,
+  deleteDialogDataAction,
+} from '../../../../Redux/Stocks Redux/DeleteTransactionActions';
+import {
   isTableLoadingAction,
   updateTableAction,
   enableCheckBoxSelectionAction,
@@ -44,6 +48,16 @@ const TransactionsStack = () => {
 
   const handleEnableDelete = () => {
     dispatch(enableCheckBoxSelectionAction(true));
+  };
+
+  const fetchDeleteDialogData = () => {
+    const filteredDeleteDialogData = tableData.filter((item) => selectedStocksTransactions.includes(item.id));
+    dispatch(deleteDialogDataAction(filteredDeleteDialogData));
+  };
+
+  const handleDeleteTransactions = () => {
+    dispatch(isDeleteDialogOpenAction(true));
+    fetchDeleteDialogData();
   };
 
   const handleDeleteCancel = () => {
@@ -96,7 +110,7 @@ const TransactionsStack = () => {
                   variant='contained'
                   loading={false}
                   disabled={!selectedStocksTransactions.length > 0 ? true : false}
-                  onClick={() => dispatch(enableCheckBoxSelectionAction(true))}
+                  onClick={handleDeleteTransactions}
                 >
                   Delete
                 </LoadingButton>
