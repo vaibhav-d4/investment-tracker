@@ -42,7 +42,7 @@ import {
 
 // COMPONENTS IMPORTS
 import useStyles from './LayoutStyles';
-import { AppBar, Drawer, DrawerHeader, StyledBadge } from '../Utils/LayoutUtils';
+import { AppBar, Drawer, DrawerHeader, StyledBadge } from '../Utils/MUI Utils/LayoutUtils';
 import sideBarItemsList from './SideBarItems';
 
 const Layout = (props) => {
@@ -123,12 +123,12 @@ const Layout = (props) => {
                   anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                   variant='dot'
                 >
-                  <Avatar alt={currentUserData.userInfo.name} src={currentUserData.userInfo.imageUrl}>
-                    {currentUserData.userInfo.name.charAt(0)}
+                  <Avatar alt={currentUserData.userInfo.userName} src={currentUserData.userInfo.userImageUrl}>
+                    {currentUserData.userInfo.userName.charAt(0)}
                   </Avatar>
                 </StyledBadge>
                 <div className={classes.userNameInAppBar}>
-                  <Typography variant='subtitle1'>{currentUserData.userInfo.name}</Typography>
+                  <Typography variant='subtitle1'>{currentUserData.userInfo.userName}</Typography>
                 </div>
               </>
             )}

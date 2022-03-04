@@ -7,14 +7,22 @@ const API = axios.create({
   baseURL: URL,
 });
 
-// API.interceptors.request.use((req) => {
-//   if (localStorage.getItem('profile')) {
-//     req.headers.authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;
-//   }
-//   return req;
-// });
+API.interceptors.request.use((req) => {
+  if (localStorage.getItem('user')) {
+    const jwtToken = JSON.parse(localStorage.getItem('user')).jwtToken;
+    req.headers.authorization = `Bearer ${jwtToken}`;
+  }
+  return req;
+});
 
-// LOGIN AND REGISTER API
+// LOGIN AND REGISTER APIS
 export const login = (formData) => API.post('/user/login', formData);
 export const register = (formData) => API.post('/user/register', formData);
 export const googleLogin = (userData) => API.post('/user/googlelogin', userData);
+
+// STOCKS APIS
+export const getTransactions = () => API.get('/stocks/getTransactions');
+export const updateTransactions = () => API.get('/stocks/updateTransactions');
+export const addTransaction = (formData) => API.post('/stocks/addTransaction', formData);
+export const deleteTransactions = (deleteTransactionIds) =>
+  API.delete('/stocks/deleteTransactions', { data: deleteTransactionIds });

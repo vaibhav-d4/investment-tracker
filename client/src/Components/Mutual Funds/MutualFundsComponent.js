@@ -5,7 +5,7 @@ import React from 'react';
 import { Typography, Box } from '@mui/material';
 
 // COMPONENT IMPORTS
-import { DrawerHeader } from '../../Common/Utils/LayoutUtils';
+import { DrawerHeader } from '../../Common/Utils/MUI Utils/LayoutUtils';
 
 const MutualFundsComponent = () => {
   return (

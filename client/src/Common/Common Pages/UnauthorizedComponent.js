@@ -8,7 +8,7 @@ import { Box, Container, Paper, Typography, Button } from '@mui/material';
 // COMPONENT IMPORTS
 import useStyles from './CommonStyles';
 import unauthorizedImage from '../Images/unauthorized.png';
-import { DrawerHeader } from '../Utils/LayoutUtils';
+import { DrawerHeader } from '../Utils/MUI Utils/LayoutUtils';
 
 const UnauthorizedComponent = () => {
   const commonClasses = useStyles();

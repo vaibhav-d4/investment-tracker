@@ -8,7 +8,7 @@ import { Box, Container, Paper, Typography, Button } from '@mui/material';
 
 // COMPONENT IMPORTS
 import useStyles from '../Common Pages/CommonStyles';
-import { DrawerHeader } from '../Utils/LayoutUtils';
+import { DrawerHeader } from '../Utils/MUI Utils/LayoutUtils';
 import sessionExpire from '../Images/sessionExpire.png';
 import logout from '../Images/logout.png';
 

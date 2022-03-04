@@ -8,7 +8,7 @@ import { Box, Container, Paper, Typography, Button } from '@mui/material';
 // COMPONENT IMPORTS
 import useStyles from './CommonStyles';
 import errorImage from '../Images/error-404.png';
-import { DrawerHeader } from '../Utils/LayoutUtils';
+import { DrawerHeader } from '../Utils/MUI Utils/LayoutUtils';
 
 const PageNotFoundComponent = () => {
   const commonClasses = useStyles();

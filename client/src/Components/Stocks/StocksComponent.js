@@ -5,9 +5,9 @@ import React, { useState } from 'react';
 import { Box, Tabs, Tab } from '@mui/material';
 
 // COMPONENT IMPORTS
-import { DrawerHeader } from '../../Common/Utils/LayoutUtils';
-import TabPanelComponent from '../../Common/Utils/TabPanelComponent';
-import StockDataGrid from './StockDataGrid';
+import { DrawerHeader } from '../../Common/Utils/MUI Utils/LayoutUtils';
+import TabPanelComponent from '../../Common/Utils/Component Utils/TabPanelComponent';
+import StockDataGrid from './Stocks DataGrid/StockDataGrid';
 
 const StocksComponent = () => {
   const [activeTab, setActiveTab] = useState(0);
