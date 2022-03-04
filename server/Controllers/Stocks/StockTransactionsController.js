@@ -79,7 +79,7 @@ export const deleteTransactions = async (req, res) => {
 
     if (totalDeletedCount === 0) throw new error('Stocks Transactions were not deleted successfully.');
     else if (totalDeletedCount === deleteTransactionIds.length) {
-      res.status(200).json({ message: `All ${totalDeletedCount} Transactions deleted successfully.` });
+      res.status(200).json({ message: `${totalDeletedCount} Transactions deleted successfully.` });
     } else {
       res.status(400).json({
         error: `Only ${totalDeletedCount} out of ${deleteTransactionIds.length} Transactions were deleted successfully.`,

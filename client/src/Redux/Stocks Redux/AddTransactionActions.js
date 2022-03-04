@@ -67,8 +67,8 @@ export const formSubmitAction = (formData) => async (dispatch) => {
         toast.successToast(data?.message);
         dispatch(isAddTransactionDialogOpen(false));
         dispatch(isAddTransactionSubmitLoading(false));
+        dispatch(getTableDataAction());
       }, 1000);
-      dispatch(getTableDataAction());
     }
   } catch (error) {
     toast.errorToast(error?.response?.data?.error || 'Unexpected Error.');
