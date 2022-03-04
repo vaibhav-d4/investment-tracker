@@ -35,6 +35,7 @@ const DeleteDialog = () => {
   const selectedStocksTransactions = useSelector((state) => state.stocks.selectedStocksTransactions);
 
   const handleCloseDeleteDialog = () => {
+    dispatch(isDialogDeleteButtonLoadingAction(false));
     dispatch(isDeleteDialogOpenAction(false));
   };
 

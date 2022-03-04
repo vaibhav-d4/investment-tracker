@@ -61,3 +61,32 @@ export const updateTransactions = async (req, res) => {
     res.status(400).json({ error: 'Error occured. Please try again.' });
   }
 };
+
+// DELETE TABLE
+export const deleteTransactions = async (req, res) => {
+  try {
+    const { userId } = req;
+    const { deleteTransactionIds } = req.body;
+
+    var totalDeletedCount = 0;
+    const deletedRecords = deleteTransactionIds.map(async (item) => {
+      const singleDeleteResult = await StockTransactionsCollection.deleteOne({ _id: item, userId });
+      if (singleDeleteResult.deletedCount === 1) {
+        totalDeletedCount++;
+      }
+    });
+    await Promise.all(deletedRecords);
+
+    if (totalDeletedCount === 0) throw new error('Stocks Transactions were not deleted successfully.');
+    else if (totalDeletedCount === deleteTransactionIds.length) {
+      res.status(200).json({ message: `All ${totalDeletedCount} Transactions deleted successfully.` });
+    } else {
+      res.status(400).json({
+        error: `Only ${totalDeletedCount} out of ${deleteTransactionIds.length} Transactions were deleted successfully.`,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: 'Error occured. Please try again.' });
+  }
+};

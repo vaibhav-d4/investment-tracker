@@ -6,6 +6,7 @@ import {
   getTransactions,
   addTransaction,
   updateTransactions,
+  deleteTransactions,
 } from '../../Controllers/Stocks/StockTransactionsController.js';
 
 // MIDDLEWARE IMPORTS
@@ -26,5 +27,8 @@ router.post('/addTransaction', ValidateToken, addTransaction);
 
 // UPDATE TRANSACTIONS API - http://localhost:PORT/stocks/updateTransactions
 router.get('/updateTransactions', ValidateToken, updateTransactions);
+
+// UPDATE TRANSACTIONS API - http://localhost:PORT/stocks/deleteTransactions
+router.delete('/deleteTransactions', ValidateToken, deleteTransactions);
 
 export default router;

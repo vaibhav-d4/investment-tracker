@@ -9,7 +9,13 @@ import { isDeleteDialogOpen, deleteDialogData, isDialogDeleteButtonLoading } fro
 
 ///////////////////////// API ACTIONS /////////////////////////
 export const deleteTransactionsAction = (request) => async (dispatch) => {
-  console.log('file: DeleteTransactionActions.js ~ line 12 ~ deleteTransactionsAction ~ request', request);
+  const transactionIds = {
+    deleteTransactionIds: request,
+  };
+  console.log(
+    'file: DeleteTransactionActions.js ~ line 13 ~ deleteTransactionsAction ~ transactionIds',
+    transactionIds
+  );
 };
 
 ///////////////////////// COMMON ACTIONS /////////////////////////
