@@ -147,7 +147,7 @@ const AddTransactionDialog = () => {
             <Button variant='text' color='primary' onClick={handleDialogClose}>
               Cancel
             </Button>
-            <LoadingButton loading={isAddTransactionSubmitLoading} variant='text' color='primary' type='submit'>
+            <LoadingButton loading={isAddTransactionSubmitLoading} variant='text' color='success' type='submit'>
               Submit
             </LoadingButton>
           </DialogActions>

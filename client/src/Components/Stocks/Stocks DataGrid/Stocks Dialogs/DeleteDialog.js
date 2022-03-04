@@ -20,16 +20,27 @@ import {
 import LoadingButton from '@mui/lab/LoadingButton';
 
 // REDUX ACTIONS IMPORTS
-import { isDeleteDialogOpenAction } from '../../../../Redux/Stocks Redux/DeleteTransactionActions';
+import {
+  isDeleteDialogOpenAction,
+  isDialogDeleteButtonLoadingAction,
+  deleteTransactionsAction,
+} from '../../../../Redux/Stocks Redux/DeleteTransactionActions';
 
 const DeleteDialog = () => {
   const dispatch = useDispatch();
 
   const isDeleteDialogOpen = useSelector((state) => state.stocks.isDeleteDialogOpen);
   const deleteDialogData = useSelector((state) => state.stocks.deleteDialogData);
+  const isDialogDeleteButtonLoading = useSelector((state) => state.stocks.isDialogDeleteButtonLoading);
+  const selectedStocksTransactions = useSelector((state) => state.stocks.selectedStocksTransactions);
 
   const handleCloseDeleteDialog = () => {
     dispatch(isDeleteDialogOpenAction(false));
+  };
+
+  const handleDeleteSubmit = () => {
+    dispatch(isDialogDeleteButtonLoadingAction(true));
+    dispatch(deleteTransactionsAction(selectedStocksTransactions));
   };
 
   return (
@@ -68,8 +79,14 @@ const DeleteDialog = () => {
           <Button variant='text' color='primary' onClick={handleCloseDeleteDialog}>
             Cancel
           </Button>
-          <LoadingButton loading={false} variant='text' color='primary' type='submit'>
-            Sure!
+          <LoadingButton
+            loading={isDialogDeleteButtonLoading}
+            variant='text'
+            color='error'
+            type='submit'
+            onClick={handleDeleteSubmit}
+          >
+            DELETE
           </LoadingButton>
         </DialogActions>
       </Dialog>

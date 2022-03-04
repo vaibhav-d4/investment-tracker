@@ -18,6 +18,7 @@ const initialState = {
   //////////////////// DELETE TRANSACTION INITIAL STATES ////////////////////
   isDeleteDialogOpen: false,
   deleteDialogData: [],
+  isDialogDeleteButtonLoading: false,
   //////////////////// STOCKS DATAGRID INITIAL STATES ////////////////////
   isTableLoading: false,
   tableData: [],
@@ -50,6 +51,9 @@ export const StocksSlice = createSlice({
     deleteDialogData: (state, action) => {
       state.deleteDialogData = action.payload;
     },
+    isDialogDeleteButtonLoading: (state, action) => {
+      state.isDialogDeleteButtonLoading = action.payload;
+    },
     //////////////////// STOCKS DATAGRID REDUCERS ////////////////////
     isTableLoading: (state, action) => {
       state.isTableLoading = action.payload;
@@ -76,6 +80,7 @@ export const {
   isYahooURLError,
   isDeleteDialogOpen,
   deleteDialogData,
+  isDialogDeleteButtonLoading,
   isTableLoading,
   tableData,
   isUpdateBtnLoading,
