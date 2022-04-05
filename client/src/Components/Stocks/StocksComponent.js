@@ -1,5 +1,6 @@
 // REACT IMPORTS
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 
 // MUI IMPORTS
 import { Box, Tabs, Tab } from '@mui/material';
@@ -10,10 +11,21 @@ import TabPanelComponent from '../../Common/Utils/Component Utils/TabPanelCompon
 import StockDataGrid from './Stocks DataGrid/StockDataGrid';
 
 const StocksComponent = () => {
+  const navigate = useNavigate();
+
   const [activeTab, setActiveTab] = useState(0);
+
+  useEffect(() => {
+    const path = window.location.pathname;
+    if (path === '/stocks') navigate('/stocks/overview');
+    if (path === '/stocks/overview') setActiveTab(0);
+    else if (path === '/stocks/transactions') setActiveTab(1);
+  }, [navigate]);
 
   const handleTabOnChange = (event, newTabValue) => {
     setActiveTab(newTabValue);
+    if (newTabValue === 0) navigate('/stocks/overview');
+    else if (newTabValue === 1) navigate('/stocks/transactions');
   };
   return (
     <>
