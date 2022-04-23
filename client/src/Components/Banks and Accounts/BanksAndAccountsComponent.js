@@ -8,6 +8,7 @@ import { Box, Tabs, Tab } from '@mui/material';
 // COMPONENT IMPORTS
 import { DrawerHeader } from '../../Common/Utils/MUI Utils/LayoutUtils';
 import TabPanelComponent from '../../Common/Utils/Component Utils/TabPanelComponent';
+import AccountsComponent from './Accounts/AccountsComponent';
 
 const BanksAndAccountsComponent = () => {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ const BanksAndAccountsComponent = () => {
           </Tabs>
         </Box>
         <TabPanelComponent value={activeTab} index={0}>
-          Accounts
+          <AccountsComponent />
         </TabPanelComponent>
         <TabPanelComponent value={activeTab} index={1}>
           Transactions
