@@ -28,11 +28,17 @@ export const getAccountsInfoAction = (request) => async (dispatch) => {};
 
 // ADD A ACCOUNT OR CATEGORY
 export const addAccountFormDataSubmitAction = (formData) => async (dispatch) => {
-  console.log('file: AccountsActions.js ~ line 31 ~ addAccountFormDataSubmitAction ~ formData', formData);
   try {
     const { data } = await api.addAccountCategory(formData);
-  } catch (err) {
-    console.log(err);
+    setTimeout(() => {
+      toast.successToast(data?.message);
+      dispatch(isAddCategoryModalSubmitBtnLoadingAction(false));
+      dispatch(isAddCategoryModalOpenAction(false));
+    }, 1000);
+  } catch (error) {
+    toast.errorToast(error?.response?.data?.error || 'Unexpected Error.');
+    dispatch(setInitialAccountFormDataAction());
+    dispatch(isAddCategoryModalSubmitBtnLoadingAction(false));
   }
 };
 
