@@ -1,5 +1,5 @@
 // REACT IMPORTS
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 // MUI IMPORTS
@@ -11,10 +11,20 @@ import DataGridNoRowsOverlayUtil from '../../../Common/Utils/MUI Utils/DataGridN
 import AddCategoryModal from './Modals/AddCategoryModal';
 
 // REDUX IMPORTS
-import { isAddCategoryModalOpenAction } from '../../../Redux/Banks and Accounts Redux/AccountsActions';
+import {
+  isAddCategoryModalOpenAction,
+  getAccountsInfoAction,
+} from '../../../Redux/Banks and Accounts Redux/AccountsActions';
 
 const CategoriesComp = () => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAccountsInfoAction());
+  }, [dispatch]);
+
+  const accountsInfoData = useSelector((state) => state.accounts.accountsInfoData);
+  const isAccountsTableLoading = useSelector((state) => state.accounts.isAccountsTableLoading);
 
   const [isAddCategoryTooltipOpen, setIsAddCategoryTooltipOpen] = useState(false);
 
@@ -51,11 +61,11 @@ const CategoriesComp = () => {
         <div style={{ display: 'flex', height: '100%' }}>
           <div style={{ flexGrow: 1 }}>
             <DataGrid
-              rows={[]}
+              rows={accountsInfoData}
               columns={CategoriesColumns}
               autoPageSize={true}
               density='compact'
-              loading={false}
+              loading={isAccountsTableLoading}
               // checkboxSelection={}
               // onSelectionModelChange={}
               // selectionModel={}
@@ -122,12 +132,49 @@ const CategoriesColumns = [
     hide: false,
   },
   {
-    field: 'currentBalance',
+    field: 'initialBalance',
     headerName: 'Balance',
     headerAlign: 'center',
     description: 'Current Balance',
     align: 'center',
-    width: 200,
+    flex: 1,
+    minWidth: 200,
     hide: false,
+  },
+  {
+    field: 'accountHolderName',
+    headerName: 'Account Holder Name',
+    headerAlign: 'center',
+    description: "Account Holder's Name",
+    align: 'center',
+    width: 200,
+    hide: true,
+  },
+  {
+    field: 'accountNumber',
+    headerName: 'Account Number',
+    headerAlign: 'center',
+    description: "User's Account Number",
+    align: 'center',
+    width: 200,
+    hide: true,
+  },
+  {
+    field: 'IFSCCode',
+    headerName: 'IFSC Code',
+    headerAlign: 'center',
+    description: 'IFSC Code',
+    align: 'center',
+    width: 200,
+    hide: true,
+  },
+  {
+    field: 'branchName',
+    headerName: 'Branch Name',
+    headerAlign: 'center',
+    description: 'Branch Name of the Account',
+    align: 'center',
+    width: 200,
+    hide: true,
   },
 ];

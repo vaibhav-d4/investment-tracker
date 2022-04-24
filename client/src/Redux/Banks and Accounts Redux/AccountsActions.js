@@ -1,6 +1,7 @@
 // SLICE IMPORTS
 import {
   accountsInfoData,
+  isAccountsTableLoading,
   isAddCategoryModalOpen,
   addAccountFormData,
   isAddCategoryModalSubmitBtnLoading,
@@ -24,7 +25,20 @@ const addCategoryInitialData = {
 
 /////////////////////////////////////// API ACTIONS ///////////////////////////////////////
 // GET ACCOUNTS AND CATEGORIES INFO
-export const getAccountsInfoAction = (request) => async (dispatch) => {};
+export const getAccountsInfoAction = () => async (dispatch) => {
+  dispatch(isAccountsTableLoadingAction(true));
+  try {
+    const { data } = await api.getAccountsInfo();
+    const accountData = await createAccountData(data?.accountsInfo);
+    dispatch(accountsInfoData(accountData));
+    setTimeout(() => {
+      toast.successToast(data?.message);
+      dispatch(isAccountsTableLoadingAction(false));
+    }, 500);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 // ADD A ACCOUNT OR CATEGORY
 export const addAccountFormDataSubmitAction = (formData) => async (dispatch) => {
@@ -34,6 +48,8 @@ export const addAccountFormDataSubmitAction = (formData) => async (dispatch) => 
       toast.successToast(data?.message);
       dispatch(isAddCategoryModalSubmitBtnLoadingAction(false));
       dispatch(isAddCategoryModalOpenAction(false));
+      dispatch(setInitialAccountFormDataAction());
+      dispatch(getAccountsInfoAction());
     }, 1000);
   } catch (error) {
     toast.errorToast(error?.response?.data?.error || 'Unexpected Error.');
@@ -57,4 +73,16 @@ export const setInitialAccountFormDataAction = () => async (dispatch) => {
 
 export const isAddCategoryModalSubmitBtnLoadingAction = (request) => async (dispatch) => {
   dispatch(isAddCategoryModalSubmitBtnLoading(request));
+};
+
+export const isAccountsTableLoadingAction = (request) => async (dispatch) => {
+  dispatch(isAccountsTableLoading(request));
+};
+
+export const createAccountData = async (data) => {
+  const dataObject = data.map(({ _id: id, ...rest }) => ({
+    id,
+    ...rest,
+  }));
+  return dataObject;
 };

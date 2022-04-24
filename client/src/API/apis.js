@@ -28,4 +28,5 @@ export const deleteTransactions = (deleteTransactionIds) =>
   API.delete('/stocks/deleteTransactions', { data: deleteTransactionIds });
 
 // BANKS AND ACCOUNTS APIS
+export const getAccountsInfo = () => API.get('/banks/getAccountsInfo');
 export const addAccountCategory = (formData) => API.post('/banks/addAccountCategory', formData);

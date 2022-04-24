@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   ///////////////////////// ACCOUNTS COMPONENT INITIAL STATES /////////////////////////
   accountsInfoData: [],
+  isAccountsTableLoading: false,
   addAccountFormData: {
     accountName: '',
     initialBalance: '',
@@ -22,6 +23,9 @@ export const BanksAndAccountsSlice = createSlice({
     accountsInfoData: (state, action) => {
       state.accountsInfoData = action.payload;
     },
+    isAccountsTableLoading: (state, action) => {
+      state.isAccountsTableLoading = action.payload;
+    },
     addAccountFormData: (state, action) => {
       state.addAccountFormData = action.payload;
     },
@@ -34,7 +38,12 @@ export const BanksAndAccountsSlice = createSlice({
   },
 });
 
-export const { accountsInfoData, isAddCategoryModalOpen, addAccountFormData, isAddCategoryModalSubmitBtnLoading } =
-  BanksAndAccountsSlice.actions;
+export const {
+  accountsInfoData,
+  isAccountsTableLoading,
+  isAddCategoryModalOpen,
+  addAccountFormData,
+  isAddCategoryModalSubmitBtnLoading,
+} = BanksAndAccountsSlice.actions;
 
 export default BanksAndAccountsSlice.reducer;
