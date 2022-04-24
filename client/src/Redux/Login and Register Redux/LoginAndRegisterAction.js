@@ -20,7 +20,7 @@ const initialFormData = {
   confirmPassword: '',
 };
 
-///////////////////////// COMMON ACTIONS ///////////////////////////////////////
+/////////////////////////////////////// COMMON ACTIONS ///////////////////////////////////////
 export const toggleUserIsToRegisterAction = (request) => async (dispatch) => {
   dispatch(toggleUserIsToRegister(request));
 };

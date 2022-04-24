@@ -1,5 +1,5 @@
 // REACT IMPORTS
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 // MUI IMPORTS
@@ -26,7 +26,7 @@ import {
 const TransactionsStack = () => {
   const dispatch = useDispatch();
 
-  const [isAddButtonTooltipOpen, setIsAddButtonTooltipOpen] = React.useState(false);
+  const [isAddButtonTooltipOpen, setIsAddButtonTooltipOpen] = useState(false);
 
   const tableData = useSelector((state) => state.stocks.tableData);
   const isUpdateBtnLoading = useSelector((state) => state.stocks.isUpdateBtnLoading);

@@ -21,15 +21,22 @@ const PathRoutes = () => {
   const isLogoutBtnClicked = useSelector((state) => state.loginAndRegister.isLogoutBtnClicked);
   const isSessionExpired = useSelector((state) => state.loginAndRegister.isSessionExpired);
 
-  const routesList = [
-    /////////////////// DEFAULT LOGIN PATH ROUTE ///////////////////
+  const checkLoggedIn = (Component) => {
+    if (userLoggedIn) return <Component />;
+    else return <Navigate to='/unauthorized' />;
+  };
+
+  /////////////////// DEFAULT LOGIN PATH ROUTE ///////////////////
+  const defaultLoginRoute = [
     {
       exact: true,
       path: '/',
       element: <Navigate to='/login' />,
     },
+  ];
 
-    /////////////////// AUTH ROUTES ///////////////////
+  /////////////////// AUTH ROUTES ///////////////////
+  const authRoutes = [
     {
       exact: true,
       path: '/login',
@@ -56,44 +63,113 @@ const PathRoutes = () => {
       path: '/unauthorized',
       element: userLoggedIn ? <Navigate to='/home' /> : <UnauthorizedComponent />,
     },
+  ];
 
-    /////////////////// COMPONENTS ROUTES ///////////////////
-    {
-      exact: true,
-      path: '/home',
-      element: userLoggedIn ? <HomeComponent /> : <Navigate to='/unauthorized' />,
-    },
-    {
-      exact: true,
-      path: '/banks',
-      element: userLoggedIn ? <BankComponent /> : <Navigate to='/unauthorized' />,
-    },
-    {
-      exact: true,
-      path: '/stocks',
-      element: userLoggedIn ? <StocksComponent /> : <Navigate to='/unauthorized' />,
-    },
-    {
-      exact: true,
-      path: '/mutualfunds',
-      element: userLoggedIn ? <MutualFundsComponent /> : <Navigate to='/unauthorized' />,
-    },
-    {
-      exact: true,
-      path: '/fd',
-      element: userLoggedIn ? <FixedDepositComponent /> : <Navigate to='/unauthorized' />,
-    },
-    {
-      exact: true,
-      path: '/gold',
-      element: userLoggedIn ? <GoldComponent /> : <Navigate to='/unauthorized' />,
-    },
-    /////////////////// NOT FOUND ///////////////////
+  ///////////////////////////////////// COMPONENTS ROUTES /////////////////////////////////////
+
+  /////////////////// NOT FOUND ///////////////////
+  const notFoundRoute = [
     {
       exact: false,
       path: '*',
       element: <PageNotFoundComponent />,
     },
+  ];
+
+  /////////////////// HOME COMPONENT ROUTES ///////////////////
+  const homeRoute = [
+    {
+      exact: true,
+      path: '/home',
+      element: checkLoggedIn(HomeComponent),
+    },
+  ];
+
+  /////////////////// BANK COMPONENT ROUTES ///////////////////
+  const banksAndAccountsRoutes = [
+    {
+      exact: true,
+      path: '/banks',
+      element: checkLoggedIn(BankComponent),
+    },
+    {
+      exact: true,
+      path: '/banks/accounts',
+      element: checkLoggedIn(BankComponent),
+    },
+    {
+      exact: true,
+      path: '/banks/transactions',
+      element: checkLoggedIn(BankComponent),
+    },
+    {
+      exact: true,
+      path: '/banks/monthlyReport',
+      element: checkLoggedIn(BankComponent),
+    },
+    {
+      exact: true,
+      path: '/banks/yearlyReport',
+      element: checkLoggedIn(BankComponent),
+    },
+  ];
+
+  /////////////////// STOCKS COMPONENT ROUTES ///////////////////
+  const stocksRoutes = [
+    {
+      exact: true,
+      path: '/stocks',
+      element: checkLoggedIn(StocksComponent),
+    },
+    {
+      exact: true,
+      path: '/stocks/overview',
+      element: checkLoggedIn(StocksComponent),
+    },
+    {
+      exact: true,
+      path: '/stocks/transactions',
+      element: checkLoggedIn(StocksComponent),
+    },
+  ];
+
+  /////////////////// MUTUAL FUND COMPONENT ROUTES ///////////////////
+  const mutualFundRoutes = [
+    {
+      exact: true,
+      path: '/mutualfunds',
+      element: checkLoggedIn(MutualFundsComponent),
+    },
+  ];
+
+  /////////////////// FIXED DEPOSIT COMPONENT ROUTES ///////////////////
+  const fdRoutes = [
+    {
+      exact: true,
+      path: '/fd',
+      element: checkLoggedIn(FixedDepositComponent),
+    },
+  ];
+
+  /////////////////// GOLD COMPONENT ROUTES ///////////////////
+  const goldRoutes = [
+    {
+      exact: true,
+      path: '/gold',
+      element: checkLoggedIn(GoldComponent),
+    },
+  ];
+
+  const routesList = [
+    ...defaultLoginRoute,
+    ...authRoutes,
+    ...homeRoute,
+    ...banksAndAccountsRoutes,
+    ...stocksRoutes,
+    ...mutualFundRoutes,
+    ...fdRoutes,
+    ...goldRoutes,
+    ...notFoundRoute,
   ];
 
   return (

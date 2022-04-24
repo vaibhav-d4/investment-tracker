@@ -15,12 +15,12 @@ const sideBarItemsList = [
   {
     text: 'Banks and Accounts',
     icon: <AccountBalanceIcon />,
-    linkText: '/banks',
+    linkText: '/banks/accounts',
   },
   {
     text: 'Stocks',
     icon: <ShowChartIcon />,
-    linkText: '/stocks',
+    linkText: '/stocks/overview',
   },
   {
     text: 'Mutual Funds',
