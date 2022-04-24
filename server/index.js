@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 // ROUTES IMPORTS
 import UserDetailsRoutes from './Routes/Users/UserDetailsRoutes.js';
 import StocksRoutes from './Routes/Stocks/StocksRoutes.js';
+import AccountRoutes from './Routes/Banks and Accounts/AccountRoutes.js';
 
 const app = express();
 dotenv.config({ path: './Env/.env' });
@@ -16,8 +17,10 @@ app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
 
+// ROUTES
 app.use('/user', UserDetailsRoutes);
 app.use('/stocks', StocksRoutes);
+app.use('/banks', AccountRoutes);
 
 app.get('/', (req, res) => {
   res.send('APP IS RUNNING');

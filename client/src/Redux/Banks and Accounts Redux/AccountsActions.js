@@ -28,6 +28,7 @@ export const getAccountsInfoAction = (request) => async (dispatch) => {};
 
 // ADD A ACCOUNT OR CATEGORY
 export const addAccountFormDataSubmitAction = (formData) => async (dispatch) => {
+  console.log('file: AccountsActions.js ~ line 31 ~ addAccountFormDataSubmitAction ~ formData', formData);
   try {
     const { data } = await api.addAccountCategory(formData);
   } catch (err) {
